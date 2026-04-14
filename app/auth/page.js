@@ -12,13 +12,17 @@ export default function AuthPage() {
     };
 
     const login = async () => {
-        const { error } = await supabase.auth.signInWithPassword({
-            email,
-            password,
-        });
-        alert(error ? error.message : "Logged in");
-    };
+  const { error } = await supabase.auth.signInWithPassword({
+    email,
+    password,
+  });
 
+  if (error) {
+    alert(error.message);
+  } else {
+    window.location.href = "/dashboard";
+  }
+};
     return (
         <div style={{ textAlign: "center", marginTop: "100px" }}>
             <h2>Login / Sign Up</h2>
