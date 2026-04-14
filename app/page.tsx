@@ -6,10 +6,10 @@ export default function Home() {
       textAlign: "center",
       marginTop: "100px",
       background: "#0f172a",
-      height: "100vh",
+      height: "80vh",
       color: "white"
     }}>
-      <h1>Machine Learning Huh </h1>
+      <h1>Machine Learning Hub</h1>
 
       <p style={{ marginBottom: "40px", color: "#cbd5e1" }}>
         A simple platform using Supabase and Vercel.
