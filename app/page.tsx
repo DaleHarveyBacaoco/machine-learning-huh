@@ -4,9 +4,9 @@ export default function Home() {
   return (
     <div style={{
       textAlign: "center",
-      marginTop: "100px",
-      background: "#0f172a",
-      height: "80vh",
+      marginTop: "200px",
+      background: "#3561c9",
+      height: "150vh",
       color: "white"
     }}>
       <h1>Machine Learning Hub</h1>
