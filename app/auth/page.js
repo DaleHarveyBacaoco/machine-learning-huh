@@ -24,7 +24,23 @@ export default function AuthPage() {
   }
 };
     return (
-        <div style={{ textAlign: "center", marginTop: "100px" }}>
+        <div style={{
+            minHeight: "100vh",
+            backgroundColor: "#5c7abb",
+            display:"flex",
+            justifyContent:"center",
+            alignItems:"center",
+            color: "black"
+        }}>
+    <div style={{
+      backgroundColor: "#ffffff",
+      padding: "30px",
+      borderRadius: "12px",
+      width: "90%",
+      maxWidth:"400px",
+      boxShadow: "0 5px 15px rgba(0, 0, 0, 0.2)",
+      textAlign:"center"
+    }}>
             <h2>Login / Sign Up</h2>
 
             <input type="email" placeholder="Email"
@@ -39,5 +55,6 @@ export default function AuthPage() {
                 Login
             </button>
         </div>
+    </div>
     );
 }
