@@ -91,6 +91,7 @@ export default function ArticlesPage() {
         {
           user_id: article.user_id,
           message: "Someone commented on your article",
+          article_id: article.id,
         },
       ]);
     }
