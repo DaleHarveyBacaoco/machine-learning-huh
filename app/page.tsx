@@ -1,32 +1,71 @@
-import Link from "next/link";
+"use client";
+
+import { useRouter } from "next/navigation";
 
 export default function Home() {
+  const router = useRouter();
+
   return (
-    <div style={{
-      minHeight: "100vh",
-      backgroundColor: "#5c7abb",
-      textAlign: "center",
-      paddingTop: "100px",
-      color: "white"
-    }}>
-      <h1>Machine Learning Hub</h1>
+    <div
+      style={{
+        height: "100vh",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        background: "linear-gradient(to right, #4f46e5, #6366f1)",
+        color: "white",
+        textAlign: "center",
+        padding: "20px",
+      }}
+    >
+      <div
+        style={{
+          background: "rgba(255,255,255,0.1)",
+          padding: "40px",
+          borderRadius: "12px",
+          backdropFilter: "blur(10px)",
+          maxWidth: "400px",
+        }}
+      >
+        <h1 style={{ fontSize: "32px", marginBottom: "10px" }}>
+          📝 Article Hub
+        </h1>
 
-      <p style={{ marginBottom: "40px" }}>
-        A simple platform using Supabase and Vercel.
-      </p>
+        <p style={{ marginBottom: "20px" }}>
+          Create, share, and interact with articles.  
+          Join the community and start posting today.
+        </p>
 
-      <Link href="/auth">
-        <button style={{
-          padding: "10px 20px",
-          border: "2px solid white",
-          background: "transparent",
-          color: "white",
-          borderRadius: "6px",
-          cursor: "pointer"
-        }}>
-          Log In
+        <button
+          onClick={() => router.push("/auth")}
+          style={{
+            padding: "10px 20px",
+            marginRight: "10px",
+            border: "none",
+            borderRadius: "6px",
+            backgroundColor: "white",
+            color: "#4f46e5",
+            cursor: "pointer",
+            fontWeight: "bold",
+          }}
+        >
+          Login / Sign Up
         </button>
-      </Link>
+
+        <button
+          onClick={() => router.push("/articles")}
+          style={{
+            padding: "10px 20px",
+            border: "1px solid white",
+            borderRadius: "6px",
+            background: "transparent",
+            color: "white",
+            cursor: "pointer",
+          }}
+        >
+          Explore Articles
+        </button>
+      </div>
     </div>
   );
 }
