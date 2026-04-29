@@ -54,7 +54,7 @@ export default function AuthPage() {
         </h2>
 
         <p style={{ fontSize: "12px", color: "#666" }}>
-          Welcome to your Article System
+          Welcome to your MIST APP
         </p>
 
         {/* TOGGLE */}
