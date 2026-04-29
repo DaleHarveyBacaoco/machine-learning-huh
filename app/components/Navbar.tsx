@@ -24,8 +24,15 @@ export default function Navbar() {
       }}
     >
       {/* LEFT SIDE */}
-      <div style={{ fontWeight: "bold" }}>MyApp</div>
-
+ <img
+  src="/logo.png"
+  alt="Logo"
+  style={{
+    height: "40px",
+    cursor: "pointer",
+  }}
+  onClick={() => router.push("/dashboard")}
+/>
       {/* RIGHT SIDE */}
       <div style={{ display: "flex", gap: "15px" }}>
         <button onClick={() => router.push("/articles")}>
