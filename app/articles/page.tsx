@@ -160,8 +160,15 @@ return (
   <h2>All Articles</h2>
   {articles.map((article) => (
     <div key={article.id} className="card">
-      <h3>{article.title}</h3>
-      <p>{article.content}</p>
+      <h3 style={{ fontSize: "20px", fontWeight: "700" }}>
+  {article.title}
+</h3>
+<p style={{ fontSize: "14px", lineHeight: "1.6", color: "#444" }}>
+  {article.content}
+</p>
+<small style={{ fontSize: "12px", color: "#888" }}>
+  {new Date(article.created_at).toLocaleString()}
+</small>
 
       <h4>Comments</h4>
 
