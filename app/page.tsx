@@ -27,6 +27,11 @@ export default function Home() {
           Get Started
         </button>
       </Link>
+      <Link href="/create">
+  <button style={{ marginLeft: "10px" }}>
+    Create Article
+  </button>
+</Link>
     </div>
   );
 }
