@@ -37,21 +37,18 @@ export default function Notifications() {
 
   return (
     <>
-  <Navbar />
-  <div className="container">
-    {/* notifications */}
-  </div>
- <div className="container">
-  <h2>Notifications 🔔</h2>
+      <Navbar />
+      <div className="container">
+        <h2>Notifications 🔔</h2>
 
-  {notifications.length === 0 && <p>No notifications yet.</p>}
+        {notifications.length === 0 && <p>No notifications yet.</p>}
 
-  {notifications.map((n) => (
-    <div key={n.id} className="card">
-      <p>{n.message}</p>
-    </div>
-  ))}
-</div>
-</>
+        {notifications.map((n) => (
+          <div key={n.id} className="card">
+            <p>{n.message}</p>
+          </div>
+        ))}
+      </div>
+    </>
   );
 }
