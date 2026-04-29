@@ -24,13 +24,10 @@ export default function Navbar() {
       }}
     >
       {/* LEFT SIDE */}
- <img
+<img
   src="/logo.png"
   alt="Logo"
-  style={{
-    height: "40px",
-    cursor: "pointer",
-  }}
+  className="logo"
   onClick={() => router.push("/dashboard")}
 />
       {/* RIGHT SIDE */}
