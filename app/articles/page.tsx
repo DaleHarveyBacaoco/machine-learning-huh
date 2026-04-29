@@ -83,18 +83,23 @@ export default function ArticlesPage() {
     }
 
     // 🔥 FIND ARTICLE OWNER
-    const article = articles.find((a) => a.id === articleId);
+const { data: articleData } = await supabase
+  .from("articles")
+  .select("user_id")
+  .eq("id", articleId)
+  .single();
 
-    // 🔔 SEND NOTIFICATION (SAFE VERSION)
-    if (article?.user_id && article.user_id !== user.id) {
-      await supabase.from("notifications").insert([
-        {
-          user_id: article.user_id,
-          message: "Someone commented on your article",
-          article_id: article.id,
-        },
-      ]);
-    }
+const articleOwnerId = articleData?.user_id;
+
+if (articleOwnerId && articleOwnerId !== user.id) {
+  await supabase.from("notifications").insert([
+    {
+      user_id: articleOwnerId,
+      message: "Someone commented on your article",
+      article_id: articleId,
+    },
+  ]);
+}
 
     setCommentText({
       ...commentText,
