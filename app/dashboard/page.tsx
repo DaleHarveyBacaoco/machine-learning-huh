@@ -68,28 +68,6 @@ export default function Dashboard() {
           textAlign: "center",
         }}
       >
-        {/* USER INFO */}
-        <h1 style={{ color: "#111827" }}>Dashboard</h1>
-
-        <p style={{ color: "#374151" }}>
-          Welcome: {user?.email}
-        </p>
-
-        <button
-          onClick={logout}
-          style={{
-            marginTop: "10px",
-            padding: "8px 14px",
-            background: "#EF4444",
-            color: "white",
-            border: "none",
-            borderRadius: "6px",
-            cursor: "pointer",
-          }}
-        >
-          Logout
-        </button>
-
         {/* TOP ARTICLES */}
         <div
           style={{

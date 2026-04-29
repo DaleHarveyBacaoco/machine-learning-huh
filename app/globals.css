@@ -34,11 +34,10 @@ body {
 
 /* CONTAINER */
 .container {
-  max-width: 800px;
-  margin: auto;
-  padding: 20px;
+  /* your existing styles */
+  background-color: #1f2933; /* dark, but not pure black */
+  color: #f9fafb;           /* very light text */
 }
-
 /* CARD STYLE */
 .card {
   background: white;
