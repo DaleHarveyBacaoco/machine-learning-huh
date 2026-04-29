@@ -1,4 +1,5 @@
 "use client";
+
 import { useEffect, useState } from "react";
 import { supabase } from "../../lib/supabaseClient";
 import Navbar from "../components/Navbar";
@@ -21,22 +22,13 @@ type Comment = {
   user_id: string;
 };
 
-type Reply = {
-  id: string;
-  comment_id: string;
-  content: string;
-  created_at: string;
-};
-
 /* ================= PAGE ================= */
 
 export default function ArticlesPage() {
   const [articles, setArticles] = useState<Article[]>([]);
   const [comments, setComments] = useState<Comment[]>([]);
-  const [replies, setReplies] = useState<Reply[]>([]);
 
   const [commentText, setCommentText] = useState<{ [key: string]: string }>({});
-  const [replyText, setReplyText] = useState<{ [key: string]: string }>({});
 
   /* ================= FETCH ================= */
 
@@ -54,17 +46,11 @@ export default function ArticlesPage() {
     setComments(data || []);
   };
 
-  const fetchReplies = async () => {
-    const { data } = await supabase.from("replies").select("*");
-    setReplies(data || []);
-  };
-
   /* ================= ADD COMMENT ================= */
 
   const addComment = async (articleId: string) => {
     const { data: userData } = await supabase.auth.getUser();
     const user = userData.user;
-
 
     if (!user) {
       alert("Login first!");
@@ -84,25 +70,6 @@ export default function ArticlesPage() {
       return;
     }
 
-    // 🔥 FIND ARTICLE OWNER
-const { data: articleData } = await supabase
-  .from("articles")
-  .select("user_id")
-  .eq("id", articleId)
-  .single();
-
-const articleOwnerId = articleData?.user_id;
-
-if (articleOwnerId && articleOwnerId !== user.id) {
-  await supabase.from("notifications").insert([
-    {
-      user_id: articleOwnerId,
-      message: "Someone commented on your article",
-      article_id: articleId,
-    },
-  ]);
-}
-
     setCommentText({
       ...commentText,
       [articleId]: "",
@@ -111,92 +78,129 @@ if (articleOwnerId && articleOwnerId !== user.id) {
     fetchComments();
   };
 
-  /* ================= ADD REPLY ================= */
-
-  const addReply = async (commentId: string) => {
-    const { data: userData } = await supabase.auth.getUser();
-    const user = userData.user;
-
-    if (!user) {
-      alert("Login first!");
-      return;
-    }
-
-    const { error } = await supabase.from("replies").insert([
-      {
-        comment_id: commentId,
-        content: replyText[commentId] || "",
-        user_id: user.id,
-      },
-    ]);
-
-    if (!error) {
-      setReplyText({
-        ...replyText,
-        [commentId]: "",
-      });
-      fetchReplies();
-    } else {
-      alert(error.message);
-    }
-  };
-
   /* ================= INIT ================= */
 
   useEffect(() => {
     fetchArticles();
     fetchComments();
-    fetchReplies();
   }, []);
 
   /* ================= UI ================= */
-return (
-  <>
-  <Navbar />
-  <div className="container">
-    {/* your existing content */}
-  </div>
-<div className="container">
-  <h2>All Articles</h2>
-  {articles.map((article) => (
-    <div key={article.id} className="card">
-      <h3 style={{ fontSize: "20px", fontWeight: "700" }}>
-  {article.title}
-</h3>
-<p style={{ fontSize: "14px", lineHeight: "1.6", color: "#444" }}>
-  {article.content}
-</p>
-<small style={{ fontSize: "12px", color: "#888" }}>
-  {new Date(article.created_at).toLocaleString()}
-</small>
 
-      <h4>Comments</h4>
+  return (
+    <>
+      <Navbar />
 
-      {comments
-        .filter((c) => c.article_id === article.id)
-        .map((c) => (
-          <div key={c.id} style={{ marginBottom: "10px" }}>
-            <p>• {c.content}</p>
-          </div>
-        ))}
+      <div
+        style={{
+          background: "#F9FAFB",
+          minHeight: "100vh",
+          padding: "20px",
+        }}
+      >
+        <div style={{ maxWidth: "800px", margin: "0 auto" }}>
+          <h2 style={{ fontSize: "24px", fontWeight: "700", color: "#111827" }}>
+            All Articles
+          </h2>
 
-      <input
-        placeholder="Write a comment..."
-        value={commentText[article.id] || ""}
-        onChange={(e) =>
-          setCommentText({
-            ...commentText,
-            [article.id]: e.target.value,
-          })
-        }
-      />
+          {articles.map((article) => (
+            <div
+              key={article.id}
+              style={{
+                background: "#fff",
+                border: "1px solid #E5E7EB",
+                borderRadius: "10px",
+                padding: "16px",
+                marginTop: "15px",
+                boxShadow: "0 2px 6px rgba(0,0,0,0.04)",
+              }}
+            >
+              {/* TITLE */}
+              <h3
+                style={{
+                  fontSize: "20px",
+                  fontWeight: "700",
+                  color: "#111827",
+                  marginBottom: "5px",
+                }}
+              >
+                {article.title}
+              </h3>
 
-      <button onClick={() => addComment(article.id)}>
-        Post Comment
-      </button>
-    </div>
-  ))}
-</div>
-</>
-);
+              {/* CONTENT */}
+              <p
+                style={{
+                  fontSize: "14px",
+                  lineHeight: "1.6",
+                  color: "#374151",
+                  marginBottom: "10px",
+                }}
+              >
+                {article.content}
+              </p>
+
+              {/* DATE */}
+              <small style={{ fontSize: "12px", color: "#6B7280" }}>
+                {new Date(article.created_at).toLocaleString()}
+              </small>
+
+              {/* COMMENTS */}
+              <div style={{ marginTop: "15px" }}>
+                <h4 style={{ fontSize: "14px", color: "#111827" }}>
+                  Comments
+                </h4>
+
+                {comments
+                  .filter((c) => c.article_id === article.id)
+                  .map((c) => (
+                    <div key={c.id} style={{ marginTop: "6px" }}>
+                      <p style={{ fontSize: "13px", color: "#374151" }}>
+                        • {c.content}
+                      </p>
+                    </div>
+                  ))}
+              </div>
+
+              {/* INPUT */}
+              <div style={{ marginTop: "10px" }}>
+                <input
+                  placeholder="Write a comment..."
+                  value={commentText[article.id] || ""}
+                  onChange={(e) =>
+                    setCommentText({
+                      ...commentText,
+                      [article.id]: e.target.value,
+                    })
+                  }
+                  style={{
+                    width: "70%",
+                    padding: "8px",
+                    border: "1px solid #E5E7EB",
+                    borderRadius: "6px",
+                    fontSize: "13px",
+                  }}
+                />
+
+                <button
+                  onClick={() => addComment(article.id)}
+                  style={{
+                    marginLeft: "8px",
+                    padding: "8px 12px",
+                    background: "#4F46E5",
+                    color: "white",
+                    border: "none",
+                    borderRadius: "6px",
+                    cursor: "pointer",
+                    fontSize: "13px",
+                  }}
+                >
+                  Post
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </>
+  );
 }

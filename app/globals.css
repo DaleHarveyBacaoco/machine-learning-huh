@@ -105,4 +105,23 @@ small {
   font-size: 12px;
   color: #888;
 }
+body {
+  background: #F9FAFB;
+  color: #111827;
+}
+
+/* headings */
+h1, h2, h3 {
+  color: #111827;
+}
+
+/* paragraphs */
+p {
+  color: #374151;
+}
+
+/* small text */
+small {
+  color: #6B7280;
+}
 }
