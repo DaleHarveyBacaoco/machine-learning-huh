@@ -12,6 +12,8 @@ type Article = {
   content: string;
   created_at: string;
   user_id: string;
+  likes: number;
+  dislikes: number;
 };
 
 type Comment = {
@@ -31,7 +33,23 @@ export default function ArticlesPage() {
   const [commentText, setCommentText] = useState<{ [key: string]: string }>({});
 
   /* ================= FETCH ================= */
+const likeArticle = async (id: string, currentLikes: number) => {
+  await supabase
+    .from("articles")
+    .update({ likes: currentLikes + 1 })
+    .eq("id", id);
 
+  fetchArticles();
+};
+
+const dislikeArticle = async (id: string, currentDislikes: number) => {
+  await supabase
+    .from("articles")
+    .update({ dislikes: currentDislikes + 1 })
+    .eq("id", id);
+
+  fetchArticles();
+};
   const fetchArticles = async () => {
     const { data } = await supabase
       .from("articles")
@@ -138,6 +156,35 @@ export default function ArticlesPage() {
               >
                 {article.content}
               </p>
+              <div style={{ marginTop: "10px", display: "flex", gap: "10px" }}>
+  
+  <button
+    onClick={() => likeArticle(article.id, article.likes || 0)}
+    style={{
+      padding: "5px 10px",
+      borderRadius: "6px",
+      border: "1px solid #E5E7EB",
+      cursor: "pointer",
+      background: "white",
+    }}
+  >
+    👍 {article.likes || 0}
+  </button>
+
+  <button
+    onClick={() => dislikeArticle(article.id, article.dislikes || 0)}
+    style={{
+      padding: "5px 10px",
+      borderRadius: "6px",
+      border: "1px solid #E5E7EB",
+      cursor: "pointer",
+      background: "white",
+    }}
+  >
+    👎 {article.dislikes || 0}
+  </button>
+
+</div>
 
               {/* DATE */}
               <small style={{ fontSize: "12px", color: "#6B7280" }}>
