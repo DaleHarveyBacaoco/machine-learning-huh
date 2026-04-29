@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { supabase } from "../../lib/supabaseClient";
+import Navbar from "../components/Navbar";
 
 export default function CreateArticle() {
   const [title, setTitle] = useState("");
@@ -44,6 +45,11 @@ export default function CreateArticle() {
   };
 
   return (
+        <>
+  <Navbar />
+  <div className="container">
+    {/* your create form */}
+  </div>
   <div className="container">
   <div className="card">
     <h2>Create Article</h2>
@@ -65,5 +71,6 @@ export default function CreateArticle() {
     </button>
   </div>
 </div>
+</>
   );
 }

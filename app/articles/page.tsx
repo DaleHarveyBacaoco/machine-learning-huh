@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { supabase } from "../../lib/supabaseClient";
+import Navbar from "../components/Navbar";
 
 /* ================= TYPES ================= */
 
@@ -150,9 +151,13 @@ if (articleOwnerId && articleOwnerId !== user.id) {
 
   /* ================= UI ================= */
 return (
+  <>
+  <Navbar />
+  <div className="container">
+    {/* your existing content */}
+  </div>
 <div className="container">
   <h2>All Articles</h2>
-
   {articles.map((article) => (
     <div key={article.id} className="card">
       <h3>{article.title}</h3>
@@ -185,5 +190,6 @@ return (
     </div>
   ))}
 </div>
+</>
 );
 }

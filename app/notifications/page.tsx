@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { supabase } from "../../lib/supabaseClient";
+import Navbar from "../components/Navbar";
+
 
 type Notification = {
   id: string;
@@ -34,6 +36,11 @@ export default function Notifications() {
   }, []);
 
   return (
+    <>
+  <Navbar />
+  <div className="container">
+    {/* notifications */}
+  </div>
  <div className="container">
   <h2>Notifications 🔔</h2>
 
@@ -45,5 +52,6 @@ export default function Notifications() {
     </div>
   ))}
 </div>
+</>
   );
 }
