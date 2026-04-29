@@ -5,18 +5,24 @@ import { supabase } from "../../lib/supabaseClient";
 export default function Notifications() {
   const [notifications, setNotifications] = useState<any[]>([]);
 
-  useEffect(() => {
-    const fetchNotifications = async () => {
-      const { data } = await supabase
-        .from("notifications")
-        .select("*")
-        .order("created_at", { ascending: false });
+useEffect(() => {
+  const fetchNotifications = async () => {
+    const { data: userData } = await supabase.auth.getUser();
+    const user = userData.user;
 
-      setNotifications(data || []);
-    };
+    if (!user) return;
 
-    fetchNotifications();
-  }, []);
+    const { data } = await supabase
+      .from("notifications")
+      .select("*")
+      .eq("user_id", user.id)
+      .order("created_at", { ascending: false });
+
+    setNotifications(data || []);
+  };
+
+  fetchNotifications();
+}, []);
 
   return (
     <div style={{ textAlign: "center", marginTop: "50px" }}>

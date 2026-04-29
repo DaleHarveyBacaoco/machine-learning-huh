@@ -9,6 +9,7 @@ type Article = {
   title: string;
   content: string;
   created_at: string;
+  user_id: string;
 };
 
 type Comment = {
@@ -68,40 +69,47 @@ export default function ArticlesPage() {
 
   /* ================= ADD COMMENT ================= */
 
-  const addComment = async (articleId: string) => {
-    const { data: userData } = await supabase.auth.getUser();
-    const user = userData.user;
+const addComment = async (articleId: string) => {
+  const { data: userData } = await supabase.auth.getUser();
+  const user = userData.user;
 
-    if (!user) {
-      alert("Login first!");
-      return;
-    }
+  if (!user) {
+    alert("Login first!");
+    return;
+  }
 
-    const { error } = await supabase.from("comments").insert([
-      {
-        content: commentText[articleId] || "",
-        article_id: articleId,
-        user_id: user.id,
-      },
-    ]);
-
-if (!error) {
-  // 🔔 CREATE NOTIFICATION
-  await supabase.from("notifications").insert([
+  const { error } = await supabase.from("comments").insert([
     {
-      user_id: articleId, // temporary (we improve later)
-      message: "Someone commented on your article",
+      content: commentText[articleId] || "",
+      article_id: articleId,
+      user_id: user.id,
     },
   ]);
 
-  setCommentText({
-    ...commentText,
-    [articleId]: "",
-  });
+  if (error) {
+    alert(error.message);
+  } else {
+    // 🔥 FIND ARTICLE OWNER
+    const article = articles.find((a) => a.id === articleId);
 
-  fetchComments();
-}
-  };
+    // 🔔 SEND NOTIFICATION TO OWNER
+    if (article && article.user_id && article.user_id !== user.id) {
+      await supabase.from("notifications").insert([
+        {
+          user_id: article.user_id,
+          message: "Someone commented on your article",
+        },
+      ]);
+    }
+
+    setCommentText({
+      ...commentText,
+      [articleId]: "",
+    });
+
+    fetchComments();
+  }
+};
 
   /* ================= ADD REPLY ================= */
 
