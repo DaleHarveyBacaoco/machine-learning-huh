@@ -34,9 +34,8 @@ body {
 
 /* CONTAINER */
 .container {
-  /* your existing styles */
-  background-color: #1f2933; /* dark, but not pure black */
-  color: #f9fafb;           /* very light text */
+  background-color: #ffffff; /* light container */
+  color: #000000;            /* black text */
 }
 /* CARD STYLE */
 .card {
