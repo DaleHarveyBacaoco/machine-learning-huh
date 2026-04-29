@@ -17,6 +17,7 @@ type Comment = {
   article_id: string;
   content: string;
   created_at: string;
+  user_id: string;
 };
 
 type Reply = {
@@ -36,74 +37,62 @@ export default function ArticlesPage() {
   const [commentText, setCommentText] = useState<{ [key: string]: string }>({});
   const [replyText, setReplyText] = useState<{ [key: string]: string }>({});
 
-  /* ================= FETCH ARTICLES ================= */
+  /* ================= FETCH ================= */
 
   const fetchArticles = async () => {
-    const { data, error } = await supabase
+    const { data } = await supabase
       .from("articles")
       .select("*")
       .order("created_at", { ascending: false });
 
-    if (!error) setArticles(data || []);
+    setArticles(data || []);
   };
-
-  /* ================= FETCH COMMENTS ================= */
 
   const fetchComments = async () => {
-    const { data, error } = await supabase
-      .from("comments")
-      .select("*");
-
-    if (!error) setComments(data || []);
+    const { data } = await supabase.from("comments").select("*");
+    setComments(data || []);
   };
 
-  /* ================= FETCH REPLIES ================= */
-
   const fetchReplies = async () => {
-    const { data, error } = await supabase
-      .from("replies")
-      .select("*");
-
-    if (!error) setReplies(data || []);
+    const { data } = await supabase.from("replies").select("*");
+    setReplies(data || []);
   };
 
   /* ================= ADD COMMENT ================= */
 
-const addComment = async (articleId: string) => {
-  const { data: userData } = await supabase.auth.getUser();
-  const user = userData.user;
+  const addComment = async (articleId: string) => {
+    const { data: userData } = await supabase.auth.getUser();
+    const user = userData.user;
 
-  if (!user) {
-    alert("Login first!");
-    return;
-  }
+    if (!user) {
+      alert("Login first!");
+      return;
+    }
 
-  const { error } = await supabase.from("comments").insert([
-    {
-      content: commentText[articleId] || "",
-      article_id: articleId,
-      user_id: user.id,
-    },
-  ]);
+    const { error } = await supabase.from("comments").insert([
+      {
+        content: commentText[articleId] || "",
+        article_id: articleId,
+        user_id: user.id,
+      },
+    ]);
 
-  if (error) {
-    alert(error.message);
-  } else {
+    if (error) {
+      alert(error.message);
+      return;
+    }
+
     // 🔥 FIND ARTICLE OWNER
     const article = articles.find((a) => a.id === articleId);
-    console.log("ARTICLE FOUND:", article);
-    console.log("ARTICLE OWNER:", article?.user_id);
-    // 🔔 SEND NOTIFICATION TO OWNER
-    if (article && article.user_id && article.user_id !== user.id) {
-const { data, error } = await supabase.from("notifications").insert([
-  {
-    user_id: article?.user_id,
-    message: "Someone commented on your article",
-  },
-]);
 
-console.log("NOTIF ERROR:", error);
-console.log("NOTIF DATA:", data);
+    // 🔔 SEND NOTIFICATION (SAFE VERSION)
+    if (article?.user_id && article.user_id !== user.id) {
+      await supabase.from("notifications").insert([
+        {
+          user_id: article.user_id,
+          message: "Someone commented on your article",
+        },
+      ]);
     }
 
     setCommentText({
@@ -112,8 +101,7 @@ console.log("NOTIF DATA:", data);
     });
 
     fetchComments();
-  }
-};
+  };
 
   /* ================= ADD REPLY ================= */
 
@@ -230,10 +218,6 @@ console.log("NOTIF DATA:", data);
               Post
             </button>
           </div>
-
-          <small>
-            {new Date(article.created_at).toLocaleString()}
-          </small>
         </div>
       ))}
     </div>

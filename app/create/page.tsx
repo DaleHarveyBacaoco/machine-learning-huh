@@ -8,16 +8,21 @@ export default function CreateArticle() {
   const [content, setContent] = useState("");
 
   const createArticle = async () => {
-    // ✅ GET LOGGED-IN USER (FIXED VERSION)
+    // 🔐 GET LOGGED-IN USER
     const { data, error: userError } = await supabase.auth.getUser();
     const user = data?.user;
+
+    if (userError) {
+      alert(userError.message);
+      return;
+    }
 
     if (!user) {
       alert("You must be logged in");
       return;
     }
 
-    // ✅ INSERT ARTICLE WITH USER ID
+    // 📝 INSERT ARTICLE WITH OWNER ID
     const { error } = await supabase.from("articles").insert([
       {
         title,
@@ -28,11 +33,14 @@ export default function CreateArticle() {
 
     if (error) {
       alert(error.message);
-    } else {
-      alert("Article created!");
-      setTitle("");
-      setContent("");
+      return;
     }
+
+    alert("Article created!");
+
+    // reset form
+    setTitle("");
+    setContent("");
   };
 
   return (
