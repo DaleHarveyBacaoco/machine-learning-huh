@@ -33,7 +33,6 @@ export default function Home() {
 
         <p style={{ marginBottom: "20px" }}>
           Create, share, and interact with articles. 
-
           So you wont MIST a thing.
         </p>
 <div style={{ marginTop: "20px" }}>
