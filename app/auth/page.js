@@ -1,60 +1,78 @@
 "use client";
-import { useState } from "react";
+
+import { useState, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import { supabase } from "../../lib/supabaseClient";
 
 export default function AuthPage() {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+  const searchParams = useSearchParams();
 
-    const signUp =async () =>{
-        const {error} = await supabase.auth.signUp({ email, password });
-        alert(error ? error.message : "Check your email!");
-    };
+  const [mode, setMode] = useState("login"); // login or signup
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-    const login = async () => {
-  const { error } = await supabase.auth.signInWithPassword({
-    email,
-    password,
-  });
+  // GET MODE FROM URL
+  useEffect(() => {
+    const urlMode = searchParams.get("mode");
+    if (urlMode === "signup") setMode("signup");
+    else setMode("login");
+  }, [searchParams]);
 
-  if (error) {
-    alert(error.message);
-  } else {
-    window.location.href = "/dashboard";
-  }
-};
-    return (
-        <div style={{
-            minHeight: "100vh",
-            backgroundColor: "#5c7abb",
-            display:"flex",
-            justifyContent:"center",
-            alignItems:"center",
-            color: "black"
-        }}>
-    <div style={{
-      backgroundColor: "#ffffff",
-      padding: "30px",
-      borderRadius: "12px",
-      width: "90%",
-      maxWidth:"400px",
-      boxShadow: "0 5px 15px rgba(0, 0, 0, 0.2)",
-      textAlign:"center"
-    }}>
-            <h2>Login / Sign Up</h2>
+  // SIGN UP
+  const signUp = async () => {
+    const { error } = await supabase.auth.signUp({
+      email,
+      password,
+    });
 
-            <input type="email" placeholder="Email"
-            onChange={(e) => setEmail(e.target.value)} /><br /><br />
+    alert(error ? error.message : "Check your email!");
+  };
 
-            <input type="password" placeholder="Password"
-            onChange={(e) => setPassword(e.target.value)} /><br /><br />
+  // LOGIN
+  const login = async () => {
+    const { error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
 
-            <button onClick={signUp} style={{ marginRight: "10px", padding: "10px 20px"}}>
-                Sign Up</button>
-            <button onClick={login}style={{padding: "10px 20px"}}>
-                Login
-            </button>
-        </div>
+    if (error) {
+      alert(error.message);
+    } else {
+      window.location.href = "/dashboard";
+    }
+  };
+
+  return (
+    <div style={{ textAlign: "center", marginTop: "100px" }}>
+      <h2>{mode === "login" ? "Login" : "Sign Up"}</h2>
+
+      {/* TOGGLE */}
+      <div style={{ marginBottom: "20px" }}>
+        <button onClick={() => setMode("login")}>Login</button>
+        <button onClick={() => setMode("signup")}>Sign Up</button>
+      </div>
+
+      {/* INPUTS */}
+      <input
+        type="email"
+        placeholder="Email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+      />
+      <br /><br />
+
+      <input
+        type="password"
+        placeholder="Password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+      />
+      <br /><br />
+
+      {/* ACTION BUTTON */}
+      <button onClick={mode === "login" ? login : signUp}>
+        {mode === "login" ? "Login" : "Create Account"}
+      </button>
     </div>
-    );
+  );
 }
