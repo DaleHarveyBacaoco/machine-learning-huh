@@ -33,19 +33,6 @@ export default function Dashboard() {
       <h1>Dashboard</h1>
 
       <p>Welcome!: {user?.email}</p>
-
-      <button
-        onClick={logout}
-        style={{
-          marginTop: "20px",
-          padding: "10px 20px",
-          border: "2px solid black",
-          borderRadius: "6px",
-          cursor: "pointer",
-        }}
-      >
-        Logout
-      </button>
     </div>
   </>
 );
