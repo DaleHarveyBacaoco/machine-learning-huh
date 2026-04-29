@@ -34,8 +34,12 @@ body {
 
 /* CONTAINER */
 .container {
-  background-color: #ffffff; /* light container */
-  color: #000000;            /* black text */
+  background-color: #ffffff; /* light background */
+  color: #000000;           /* black text */
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 20px;
+  border-radius: 10px;
 }
 /* CARD STYLE */
 .card {
