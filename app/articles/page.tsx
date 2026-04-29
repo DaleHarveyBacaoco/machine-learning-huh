@@ -151,6 +151,7 @@ export default function ArticlesPage() {
       {articles.map((article) => (
         <div
           key={article.id}
+          id={article.id}
           style={{
             border: "1px solid #ccc",
             padding: "15px",
