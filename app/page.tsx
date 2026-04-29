@@ -28,12 +28,12 @@ export default function Home() {
         }}
       >
         <h1 style={{ fontSize: "32px", marginBottom: "10px" }}>
-          📝 Article Hub
+          📝 MIST APP
         </h1>
 
         <p style={{ marginBottom: "20px" }}>
           Create, share, and interact with articles.  
-          Join the community and start posting today.
+          So you wont Mist a thing.
         </p>
 
         <button
