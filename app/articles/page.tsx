@@ -64,6 +64,7 @@ export default function ArticlesPage() {
     const { data: userData } = await supabase.auth.getUser();
     const user = userData.user;
 
+
     if (!user) {
       alert("Login first!");
       return;
@@ -148,85 +149,41 @@ if (articleOwnerId && articleOwnerId !== user.id) {
   }, []);
 
   /* ================= UI ================= */
+return (
+<div className="container">
+  <h2>All Articles</h2>
 
-  return (
-    <div style={{ textAlign: "center", marginTop: "50px" }}>
-      <h2>All Articles</h2>
+  {articles.map((article) => (
+    <div key={article.id} className="card">
+      <h3>{article.title}</h3>
+      <p>{article.content}</p>
 
-      {articles.map((article) => (
-        <div
-          key={article.id}
-          id={article.id}
-          style={{
-            border: "1px solid #ccc",
-            padding: "15px",
-            margin: "10px auto",
-            width: "80%",
-            borderRadius: "8px",
-          }}
-        >
-          <h3>{article.title}</h3>
-          <p>{article.content}</p>
+      <h4>Comments</h4>
 
-          {/* ================= COMMENTS ================= */}
-
-          <div style={{ marginTop: "15px" }}>
-            <h4>Comments</h4>
-
-            {comments
-              .filter((c) => c.article_id === article.id)
-              .map((c) => (
-                <div key={c.id} style={{ marginBottom: "10px" }}>
-                  <p>• {c.content}</p>
-
-                  {/* ================= REPLIES ================= */}
-
-                  <div style={{ marginLeft: "20px" }}>
-                    {replies
-                      .filter((r) => r.comment_id === c.id)
-                      .map((r) => (
-                        <p key={r.id}>↳ {r.content}</p>
-                      ))}
-
-                    <input
-                      type="text"
-                      placeholder="Reply..."
-                      value={replyText[c.id] || ""}
-                      onChange={(e) =>
-                        setReplyText({
-                          ...replyText,
-                          [c.id]: e.target.value,
-                        })
-                      }
-                    />
-
-                    <button onClick={() => addReply(c.id)}>
-                      Reply
-                    </button>
-                  </div>
-                </div>
-              ))}
-
-            {/* ================= ADD COMMENT ================= */}
-
-            <input
-              type="text"
-              placeholder="Add comment"
-              value={commentText[article.id] || ""}
-              onChange={(e) =>
-                setCommentText({
-                  ...commentText,
-                  [article.id]: e.target.value,
-                })
-              }
-            />
-
-            <button onClick={() => addComment(article.id)}>
-              Post
-            </button>
+      {comments
+        .filter((c) => c.article_id === article.id)
+        .map((c) => (
+          <div key={c.id} style={{ marginBottom: "10px" }}>
+            <p>• {c.content}</p>
           </div>
-        </div>
-      ))}
+        ))}
+
+      <input
+        placeholder="Write a comment..."
+        value={commentText[article.id] || ""}
+        onChange={(e) =>
+          setCommentText({
+            ...commentText,
+            [article.id]: e.target.value,
+          })
+        }
+      />
+
+      <button onClick={() => addComment(article.id)}>
+        Post Comment
+      </button>
     </div>
-  );
+  ))}
+</div>
+);
 }

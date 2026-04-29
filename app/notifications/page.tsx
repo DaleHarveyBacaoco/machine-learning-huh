@@ -34,46 +34,16 @@ export default function Notifications() {
   }, []);
 
   return (
-    <div style={{ textAlign: "center", marginTop: "50px" }}>
-      <h2>Notifications 🔔</h2>
+ <div className="container">
+  <h2>Notifications 🔔</h2>
 
-      {/* EMPTY STATE */}
-      {notifications.length === 0 && <p>No notifications yet.</p>}
+  {notifications.length === 0 && <p>No notifications yet.</p>}
 
-      {/* NOTIFICATION LIST */}
-      {notifications.map((n) => (
-        <div
-          key={n.id}
-          style={{
-            border: "1px solid #ccc",
-            padding: "12px",
-            margin: "10px auto",
-            width: "70%",
-            borderRadius: "8px",
-            textAlign: "left",
-          }}
-        >
-          <p>{n.message}</p>
-
-          {/* VIEW BUTTON */}
-          {n.article_id && (
-            <button
-              onClick={() =>
-                (window.location.href = `/articles#${n.article_id}`)
-              }
-              style={{
-                marginTop: "8px",
-                padding: "5px 10px",
-                border: "1px solid black",
-                borderRadius: "5px",
-                cursor: "pointer",
-              }}
-            >
-              View Article
-            </button>
-          )}
-        </div>
-      ))}
+  {notifications.map((n) => (
+    <div key={n.id} className="card">
+      <p>{n.message}</p>
     </div>
+  ))}
+</div>
   );
 }
