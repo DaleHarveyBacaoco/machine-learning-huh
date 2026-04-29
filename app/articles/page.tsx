@@ -91,15 +91,19 @@ const addComment = async (articleId: string) => {
   } else {
     // 🔥 FIND ARTICLE OWNER
     const article = articles.find((a) => a.id === articleId);
-
+    console.log("ARTICLE FOUND:", article);
+    console.log("ARTICLE OWNER:", article?.user_id);
     // 🔔 SEND NOTIFICATION TO OWNER
     if (article && article.user_id && article.user_id !== user.id) {
-      await supabase.from("notifications").insert([
-        {
-          user_id: article.user_id,
-          message: "Someone commented on your article",
-        },
-      ]);
+const { data, error } = await supabase.from("notifications").insert([
+  {
+    user_id: article?.user_id,
+    message: "Someone commented on your article",
+  },
+]);
+
+console.log("NOTIF ERROR:", error);
+console.log("NOTIF DATA:", data);
     }
 
     setCommentText({
