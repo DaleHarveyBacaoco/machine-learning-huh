@@ -124,4 +124,23 @@ p {
 small {
   color: #6B7280;
 }
+input, textarea {
+  color: #111827;            /* dark readable text */
+  background: #ffffff;       /* clean white input */
+  border: 1px solid #E5E7EB;
+  padding: 10px;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #9CA3AF;            /* soft gray placeholder */
+}
+
+input:focus, textarea:focus {
+  outline: none;
+  border-color: #4F46E5;     /* blue focus highlight */
+  box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.2);
+}
 }
