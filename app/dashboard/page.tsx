@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { supabase } from "../../lib/supabaseClient";
+import Navbar from "../components/Navbar";
 
 export default function Dashboard() {
   const [user, setUser] = useState<any>(null);
@@ -19,8 +20,10 @@ export default function Dashboard() {
     await supabase.auth.signOut();
     window.location.href = "/";
   };
+ return (
+  <>
+    <Navbar />
 
-  return (
     <div
       style={{
         textAlign: "center",
@@ -31,57 +34,20 @@ export default function Dashboard() {
 
       <p>Welcome: {user?.email}</p>
 
-      <div style={{ marginTop: "30px" }}>
-        {/* VIEW ARTICLES */}
-        <button
-          onClick={() => (window.location.href = "/articles")}
-          style={{
-            marginRight: "10px",
-            padding: "10px 20px",
-            border: "2px solid black",
-            borderRadius: "6px",
-            cursor: "pointer",
-          }}
-        >
-          View Articles
-        </button>
-
-        {/* CREATE ARTICLE */}
-        <button
-          onClick={() => (window.location.href = "/create")}
-          style={{
-            marginRight: "10px",
-            padding: "10px 20px",
-            border: "2px solid black",
-            borderRadius: "6px",
-            cursor: "pointer",
-          }}
-        >
-          Create Article
-        </button>
-
-        {/* LOGOUT */}
-        <button
-          onClick={logout}
-          style={{
-            padding: "10px 20px",
-            border: "2px solid black",
-            borderRadius: "6px",
-            cursor: "pointer",
-            backgroundColor: "#f44336",
-            color: "white",
-          }}
-        >
-          Logout
-        </button>
-        
-        <button
-  onClick={() => (window.location.href = "/notifications")}
->
-  Notifications
-</button>
-        
-      </div>
+      <button
+        onClick={logout}
+        style={{
+          marginTop: "20px",
+          padding: "10px 20px",
+          border: "2px solid black",
+          borderRadius: "6px",
+          cursor: "pointer",
+        }}
+      >
+        Logout
+      </button>
     </div>
-  );
+  </>
+);
+
 }
