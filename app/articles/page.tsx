@@ -85,15 +85,22 @@ export default function ArticlesPage() {
       },
     ]);
 
-    if (!error) {
-      setCommentText({
-        ...commentText,
-        [articleId]: "",
-      });
-      fetchComments();
-    } else {
-      alert(error.message);
-    }
+if (!error) {
+  // 🔔 CREATE NOTIFICATION
+  await supabase.from("notifications").insert([
+    {
+      user_id: articleId, // temporary (we improve later)
+      message: "Someone commented on your article",
+    },
+  ]);
+
+  setCommentText({
+    ...commentText,
+    [articleId]: "",
+  });
+
+  fetchComments();
+}
   };
 
   /* ================= ADD REPLY ================= */

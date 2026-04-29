@@ -74,6 +74,13 @@ export default function Dashboard() {
         >
           Logout
         </button>
+        
+        <button
+  onClick={() => (window.location.href = "/notifications")}
+>
+  Notifications
+</button>
+        
       </div>
     </div>
   );
