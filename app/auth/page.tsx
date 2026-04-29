@@ -46,6 +46,7 @@ export default function AuthPage() {
           borderRadius: "12px",
           boxShadow: "0 10px 25px rgba(0,0,0,0.2)",
           textAlign: "center",
+          color: "black", // make all text inside this container black
         }}
       >
         <h2 style={{ marginBottom: "10px" }}>
@@ -100,6 +101,7 @@ export default function AuthPage() {
             marginBottom: "10px",
             borderRadius: "6px",
             border: "1px solid #ccc",
+            color: "black",
           }}
         />
 
@@ -114,6 +116,7 @@ export default function AuthPage() {
             marginBottom: "15px",
             borderRadius: "6px",
             border: "1px solid #ccc",
+            color: "black",
           }}
         />
 
