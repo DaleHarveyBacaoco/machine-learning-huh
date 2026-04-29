@@ -7,16 +7,17 @@ import { supabase } from "../../lib/supabaseClient";
 export default function AuthPage() {
   const searchParams = useSearchParams();
 
-  const [mode, setMode] = useState("login"); // login or signup
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+import { useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 
-  // GET MODE FROM URL
-  useEffect(() => {
-    const urlMode = searchParams.get("mode");
-    if (urlMode === "signup") setMode("signup");
-    else setMode("login");
-  }, [searchParams]);
+const searchParams = useSearchParams();
+const [mode, setMode] = useState("login");
+
+useEffect(() => {
+  const urlMode = searchParams.get("mode");
+  if (urlMode === "signup") setMode("signup");
+  else setMode("login");
+}, [searchParams]);
 
   // SIGN UP
   const signUp = async () => {
