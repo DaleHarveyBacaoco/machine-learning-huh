@@ -24,7 +24,7 @@ export default function Home() {
           borderRadius: "6px",
           cursor: "pointer"
         }}>
-          Get Started
+          Log In
         </button>
       </Link>
     </div>
