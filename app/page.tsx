@@ -51,20 +51,6 @@ export default function Home() {
         >
           Login / Sign Up
         </button>
-
-        <button
-          onClick={() => router.push("/articles")}
-          style={{
-            padding: "10px 20px",
-            border: "1px solid white",
-            borderRadius: "6px",
-            background: "transparent",
-            color: "white",
-            cursor: "pointer",
-          }}
-        >
-          Explore Articles
-        </button>
       </div>
     </div>
   );
