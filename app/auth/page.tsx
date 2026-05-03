@@ -55,7 +55,7 @@ export default function AuthPage() {
           background: "#fff",
           padding: "30px",
           borderRadius: "12px",
-          boxShadow: "0 10px 25px rgba(0,0,0,0.08)",
+          boxShadow: "0 10px 25px rgba(153, 70, 255, 0.8)",
         }}
       >
         {/* TITLE */}
