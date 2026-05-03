@@ -34,19 +34,27 @@ export default function ArticlesPage() {
 
   /* ================= FETCH ================= */
 const likeArticle = async (id: string, currentLikes: number) => {
-  await supabase
+  const { error } = await supabase
     .from("articles")
-    .update({ likes: currentLikes + 1 })
+    .update({ likes: (currentLikes || 0) + 1 })
     .eq("id", id);
+
+  if (error) {
+    console.log("LIKE ERROR:", error.message);
+  }
 
   fetchArticles();
 };
 
 const dislikeArticle = async (id: string, currentDislikes: number) => {
-  await supabase
+  const { error } = await supabase
     .from("articles")
-    .update({ dislikes: currentDislikes + 1 })
+    .update({ dislikes: (currentDislikes || 0) + 1 })
     .eq("id", id);
+
+  if (error) {
+    console.log("DISLIKE ERROR:", error.message);
+  }
 
   fetchArticles();
 };
