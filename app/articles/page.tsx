@@ -12,7 +12,7 @@ type Article = {
   content: string;
   created_at: string;
   user_id: string;
-  likes: number;
+  likes: {count: number }[];
   dislikes: number;
 };
 
@@ -33,14 +33,41 @@ export default function ArticlesPage() {
   const [commentText, setCommentText] = useState<{ [key: string]: string }>({});
 
   /* ================= FETCH ================= */
-const likeArticle = async (id: string, currentLikes: number) => {
-  const { error } = await supabase
-    .from("articles")
-    .update({ likes: (currentLikes || 0) + 1 })
-    .eq("id", id);
+const toggleLike = async (articleId: string) => {
+  const { data: userData } = await supabase.auth.getUser();
+  const user = userData.user;
 
-  if (error) {
-    console.log("LIKE ERROR:", error.message);
+  if (!user) {
+    alert("Login first!");
+    return;
+  }
+
+  // 🔍 CHECK IF ALREADY LIKED
+  const { data: existingLike } = await supabase
+    .from("likes")
+    .select( `
+      *,
+      likes(count)
+      `)
+    .eq("user_id", user.id)
+    .eq("article_id", articleId)
+    .maybeSingle();
+
+  if (existingLike) {
+    // ❌ UNLIKE
+    await supabase
+      .from("likes")
+      .delete()
+      .eq("user_id", user.id)
+      .eq("article_id", articleId);
+  } else {
+    // ❤️ LIKE
+    await supabase.from("likes").insert([
+      {
+        user_id: user.id,
+        article_id: articleId,
+      },
+    ]);
   }
 
   fetchArticles();
@@ -167,7 +194,7 @@ const dislikeArticle = async (id: string, currentDislikes: number) => {
               <div style={{ marginTop: "10px", display: "flex", gap: "10px" }}>
   
   <button
-    onClick={() => likeArticle(article.id, article.likes || 0)}
+    onClick={() => toggleLike(article.id)}
     style={{
       padding: "5px 10px",
       borderRadius: "6px",
@@ -176,7 +203,7 @@ const dislikeArticle = async (id: string, currentDislikes: number) => {
       background: "white",
     }}
   >
-    👍 {article.likes || 0}
+    👍 {article.likes?.[0]?.count || 0}
   </button>
 
   <button
