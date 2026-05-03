@@ -130,6 +130,22 @@ const dislikeArticle = async (id: string, currentDislikes: number) => {
 
     fetchComments();
   };
+  const shareArticle = async (articleId: string) => {
+  const url = `${window.location.origin}/articles#${articleId}`;
+
+  // ✅ MOBILE / MODERN BROWSERS
+  if (navigator.share) {
+    await navigator.share({
+      title: "Check this article",
+      text: "I found this interesting!",
+      url: url,
+    });
+  } else {
+    // 💻 FALLBACK (COPY LINK)
+    navigator.clipboard.writeText(url);
+    alert("Link copied!");
+  }
+};
 
   /* ================= INIT ================= */
 
@@ -158,7 +174,7 @@ const dislikeArticle = async (id: string, currentDislikes: number) => {
 
           {articles.map((article) => (
             <div
-              key={article.id}
+              id={article.id} key={article.id}
               style={{
                 background: "#fff",
                 border: "1px solid #E5E7EB",
@@ -192,7 +208,7 @@ const dislikeArticle = async (id: string, currentDislikes: number) => {
                 {article.content}
               </p>
               <div style={{ marginTop: "10px", display: "flex", gap: "10px" }}>
-  
+
   <button
     onClick={() => toggleLike(article.id)}
     style={{
@@ -218,6 +234,19 @@ const dislikeArticle = async (id: string, currentDislikes: number) => {
   >
     👎 {article.dislikes || 0}
   </button>
+  <button
+  onClick={() => shareArticle(article.id)}
+  style={{
+    padding: "5px 10px",
+    borderRadius: "6px",
+    border: "1px solid #E5E7EB",
+    cursor: "pointer",
+    background: "white",
+  }}
+>
+  🔗 Share
+</button>
+  
 
 </div>
 
