@@ -7,89 +7,98 @@ export default function AuthPage() {
   const [mode, setMode] = useState<"login" | "signup">("login");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [message, setMessage] = useState("");
 
   const login = async () => {
+    setMessage("");
+
     const { error } = await supabase.auth.signInWithPassword({
       email,
       password,
     });
 
-    if (error) alert(error.message);
-    else window.location.href = "/dashboard";
+    if (error) {
+      setMessage(error.message);
+    } else {
+      window.location.href = "/dashboard";
+    }
   };
 
   const signUp = async () => {
+    setMessage("");
+
     const { error } = await supabase.auth.signUp({
       email,
       password,
     });
 
-    if (error) alert(error.message);
-    else alert("Check your email to confirm account!");
+    if (error) {
+      setMessage(error.message);
+    } else {
+      setMessage("Check your email to confirm your account.");
+    }
   };
 
   return (
     <div
       style={{
-        height: "100vh",
+        minHeight: "100vh",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        background: "linear-gradient(to right, #4f46e5, #6366f1)",
+        background: "#F9FAFB",
       }}
     >
       <div
         style={{
           width: "350px",
-          background: "white",
+          background: "#fff",
           padding: "30px",
           borderRadius: "12px",
-          boxShadow: "0 10px 25px rgba(0,0,0,0.2)",
-          textAlign: "center",
-          color: "black", // make all text inside this container black
+          boxShadow: "0 10px 25px rgba(0,0,0,0.08)",
         }}
       >
-        <h2 style={{ marginBottom: "10px" }}>
-          {mode === "login" ? "Login" : "Create Account"}
+        {/* TITLE */}
+        <h2
+          style={{
+            textAlign: "center",
+            fontWeight: "700",
+            color: "#111827",
+          }}
+        >
+          {mode === "login" ? "Welcome Back" : "Create Account"}
         </h2>
 
-        <p style={{ fontSize: "12px", color: "#666" }}>
-          Welcome to your MIST APP
+        <p
+          style={{
+            textAlign: "center",
+            fontSize: "13px",
+            color: "#6B7280",
+            marginBottom: "20px",
+          }}
+        >
+          {mode === "login"
+            ? "Login to continue"
+            : "Sign up to get started"}
         </p>
 
-        {/* TOGGLE */}
-        <div style={{ margin: "15px 0" }}>
-          <button
-            onClick={() => setMode("login")}
+        {/* ERROR / MESSAGE */}
+        {message && (
+          <p
             style={{
-              marginRight: "10px",
-              padding: "8px 12px",
-              background: mode === "login" ? "#4f46e5" : "#eee",
-              color: mode === "login" ? "white" : "black",
-              border: "none",
+              background: "#FEF2F2",
+              color: "#B91C1C",
+              padding: "8px",
               borderRadius: "6px",
-              cursor: "pointer",
+              fontSize: "12px",
+              marginBottom: "10px",
             }}
           >
-            Login
-          </button>
+            {message}
+          </p>
+        )}
 
-          <button
-            onClick={() => setMode("signup")}
-            style={{
-              padding: "8px 12px",
-              background: mode === "signup" ? "#4f46e5" : "#eee",
-              color: mode === "signup" ? "white" : "black",
-              border: "none",
-              borderRadius: "6px",
-              cursor: "pointer",
-            }}
-          >
-            Sign Up
-          </button>
-        </div>
-
-        {/* INPUTS */}
+        {/* EMAIL */}
         <input
           type="email"
           placeholder="Email"
@@ -97,14 +106,11 @@ export default function AuthPage() {
           onChange={(e) => setEmail(e.target.value)}
           style={{
             width: "100%",
-            padding: "10px",
             marginBottom: "10px",
-            borderRadius: "6px",
-            border: "1px solid #ccc",
-            color: "black",
           }}
         />
 
+        {/* PASSWORD */}
         <input
           type="password"
           placeholder="Password"
@@ -112,11 +118,7 @@ export default function AuthPage() {
           onChange={(e) => setPassword(e.target.value)}
           style={{
             width: "100%",
-            padding: "10px",
             marginBottom: "15px",
-            borderRadius: "6px",
-            border: "1px solid #ccc",
-            color: "black",
           }}
         />
 
@@ -126,15 +128,42 @@ export default function AuthPage() {
           style={{
             width: "100%",
             padding: "10px",
-            background: "#4f46e5",
+            background: "#4F46E5",
             color: "white",
             border: "none",
             borderRadius: "6px",
             cursor: "pointer",
+            fontWeight: "600",
           }}
         >
           {mode === "login" ? "Login" : "Create Account"}
         </button>
+
+        {/* TOGGLE */}
+        <p
+          style={{
+            marginTop: "15px",
+            fontSize: "12px",
+            textAlign: "center",
+            color: "#6B7280",
+          }}
+        >
+          {mode === "login"
+            ? "Don't have an account?"
+            : "Already have an account?"}{" "}
+          <span
+            onClick={() =>
+              setMode(mode === "login" ? "signup" : "login")
+            }
+            style={{
+              color: "#4F46E5",
+              cursor: "pointer",
+              fontWeight: "600",
+            }}
+          >
+            {mode === "login" ? "Sign up" : "Login"}
+          </span>
+        </p>
       </div>
     </div>
   );
