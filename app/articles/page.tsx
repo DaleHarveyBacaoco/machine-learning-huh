@@ -125,35 +125,63 @@ const toggleDislike = async (articleId: string) => {
 
   /* ================= ADD COMMENT ================= */
 
-  const addComment = async (articleId: string) => {
-    const { data: userData } = await supabase.auth.getUser();
-    const user = userData.user;
+const addComment = async (articleId: string) => {
+  const { data: userData } = await supabase.auth.getUser();
+  const user = userData.user;
 
-    if (!user) {
-      alert("Login first!");
-      return;
+  if (!user) {
+    alert("Login first!");
+    return;
+  }
+
+  // ✅ INSERT COMMENT
+  const { error } = await supabase.from("comments").insert([
+    {
+      content: commentText[articleId] || "",
+      article_id: articleId,
+      user_id: user.id,
+    },
+  ]);
+
+  if (error) {
+    alert(error.message);
+    return;
+  }
+
+  // 🔥 GET ARTICLE OWNER
+  const { data: articleData } = await supabase
+    .from("articles")
+    .select("user_id")
+    .eq("id", articleId)
+    .single();
+
+  const articleOwnerId = articleData?.user_id;
+
+  // 🔔 CREATE NOTIFICATION
+  if (articleOwnerId && articleOwnerId !== user.id) {
+    const { error: notifError } = await supabase
+      .from("notifications")
+      .insert([
+        {
+          user_id: articleOwnerId,
+          message: "Someone commented on your article",
+          article_id: articleId,
+        },
+      ]);
+
+    if (notifError) {
+      console.log("NOTIFICATION ERROR:", notifError.message);
     }
+  }
 
-    const { error } = await supabase.from("comments").insert([
-      {
-        content: commentText[articleId] || "",
-        article_id: articleId,
-        user_id: user.id,
-      },
-    ]);
+  // ✅ RESET INPUT
+  setCommentText({
+    ...commentText,
+    [articleId]: "",
+  });
 
-    if (error) {
-      alert(error.message);
-      return;
-    }
-
-    setCommentText({
-      ...commentText,
-      [articleId]: "",
-    });
-
-    fetchComments();
-  };
+  fetchComments();
+};
   const shareArticle = async (articleId: string) => {
   const url = `${window.location.origin}/articles#${articleId}`;
 
