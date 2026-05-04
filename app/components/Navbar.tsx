@@ -47,6 +47,7 @@ export default function Navbar() {
         <button onClick={logout}>
           Logout
         </button>
+        <a href="/profile">Profile</a>
       </div>
     </div>
   );
