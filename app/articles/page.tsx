@@ -133,6 +133,7 @@ const addComment = async (articleId: string) => {
     alert("Login first!");
     return;
   }
+  console.log("Comment successs, Now Creating Notifications");
 
   // ✅ INSERT COMMENT
   const { error } = await supabase.from("comments").insert([
