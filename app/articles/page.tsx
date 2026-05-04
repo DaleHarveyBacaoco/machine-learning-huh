@@ -45,7 +45,11 @@ const toggleLike = async (articleId: string) => {
   // 🔍 CHECK IF ALREADY LIKED
   const { data: existingLike } = await supabase
     .from("likes")
-    .select("*")
+    .select(`
+      *,
+      likes(count),
+      dislikes(count)
+      `)
     .eq("user_id", user.id)
     .eq("article_id", articleId)
     .maybeSingle();
