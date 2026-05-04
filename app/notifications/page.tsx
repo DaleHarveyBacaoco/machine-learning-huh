@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { supabase } from "../../lib/supabaseClient";
 import Navbar from "../components/Navbar";
-
+import Link from "next/link";
 
 type Notification = {
   id: string;
@@ -47,9 +47,15 @@ const fetchNotifications = async () => {
         {notifications.length === 0 && <p>No notifications yet.</p>}
 
         {notifications.map((n) => (
-          <div key={n.id} className="card">
-            <p>{n.message}</p>
-          </div>
+          <Link href={`/articles/${n.article_id}`}>
+  <div
+    className="card"
+    style={{ cursor: "pointer" }}
+  >
+    <p>{n.message}</p>
+    <small>Click to view article</small>
+  </div>
+</Link>
         ))}
       </div>
     </>

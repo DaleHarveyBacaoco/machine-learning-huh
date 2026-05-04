@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { supabase } from "../../lib/supabaseClient";
 import Navbar from "../components/Navbar";
-
+import Link from "next/link";
 /* ================= TYPES ================= */
 
 type Article = {
@@ -238,17 +238,18 @@ console.log("STEP 4: notification result =", result);
               }}
             >
               {/* TITLE */}
-              <h3
-                style={{
-                  fontSize: "20px",
-                  fontWeight: "700",
-                  color: "#111827",
-                  marginBottom: "5px",
-                }}
-              >
-                {article.title}
-              </h3>
-
+              <Link href={`/articles/${article.id}`}>
+  <h3
+    style={{
+      fontSize: "20px",
+      fontWeight: "700",
+      color: "#111827",
+      cursor: "pointer",
+    }}
+  >
+    {article.title}
+  </h3>
+</Link>
               {/* CONTENT */}
               <p
                 style={{
