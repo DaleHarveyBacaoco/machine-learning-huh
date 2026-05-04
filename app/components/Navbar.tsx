@@ -48,32 +48,37 @@ export default function Navbar() {
       }}
     >
       {/* LEFT SIDE */}
-      <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
-        {/* LOGO */}
-        <Link
-          href="/"
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "8px",
-            fontWeight: "800",
-            fontSize: "18px",
-            color: "#111827",
-            textDecoration: "none",
-            marginRight: "10px",
-          }}
-        >
-          <img
-            src="/logo.png"
-            alt="Logo"
-            style={{
-              width: "28px",
-              height: "28px",
-              objectFit: "contain",
-            }}
-          />
-          MIST
-        </Link>
+{/* LEFT SIDE */}
+<div style={{ display: "flex", gap: "12px", alignItems: "center" }}>
+  
+  {/* LOGO + APP NAME */}
+  <Link
+    href="/"
+    style={{
+      display: "flex",
+      alignItems: "center",
+      gap: "10px",
+      fontWeight: "800",
+      fontSize: "18px",
+      color: "#111827",
+      textDecoration: "none",
+    }}
+  >
+    <img
+      src="/logo.png"
+      alt="Logo"
+      style={{
+        width: "30px",
+        height: "30px",
+        objectFit: "contain",
+      }}
+    />
+
+    {/* APP NAME BACK */}
+    <span style={{ letterSpacing: "0.5px" }}>
+      MIST
+    </span>
+  </Link>
 
         {/* NAV LINKS */}
         <Link
