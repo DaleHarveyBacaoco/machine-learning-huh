@@ -150,21 +150,23 @@ const addComment = async (articleId: string) => {
   }
 
   // 🔥 GET ARTICLE OWNER
-// 🔍 GET ARTICLE OWNER
 const { data: articleData, error: articleError } = await supabase
   .from("articles")
   .select("user_id")
   .eq("id", articleId)
   .single();
 
-console.log("ARTICLE DATA:", articleData);
-console.log("ARTICLE ERROR:", articleError);
+if (articleError) {
+  console.log("ARTICLE ERROR:", articleError.message);
+  return;
+}
 
 const articleOwnerId = articleData?.user_id;
 
-// 🔔 TRY INSERT
+console.log("ARTICLE OWNER:", articleOwnerId);
+
 if (articleOwnerId && articleOwnerId !== user.id) {
-  const { data, error: notifError } = await supabase
+  const { error: notifError } = await supabase
     .from("notifications")
     .insert([
       {
@@ -174,30 +176,12 @@ if (articleOwnerId && articleOwnerId !== user.id) {
       },
     ]);
 
-  console.log("NOTIF DATA:", data);
-  console.log("NOTIF ERROR:", notifError);
-} else {
-  console.log("NOTIFICATION BLOCKED:", {
-    articleOwnerId,
-    currentUser: user.id,
-  });
-}
-  // 🔔 CREATE NOTIFICATION
-  if (articleOwnerId && articleOwnerId !== user.id) {
-    const { error: notifError } = await supabase
-      .from("notifications")
-      .insert([
-        {
-          user_id: articleOwnerId,
-          message: "Someone commented on your article",
-          article_id: articleId,
-        },
-      ]);
-
-    if (notifError) {
-      console.log("NOTIFICATION ERROR:", notifError.message);
-    }
+  if (notifError) {
+    console.log("NOTIFICATION ERROR:", notifError.message);
+  } else {
+    console.log("NOTIFICATION CREATED ✅");
   }
+}
 
   // ✅ RESET INPUT
   setCommentText({
