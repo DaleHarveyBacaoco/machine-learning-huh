@@ -45,11 +45,7 @@ const toggleLike = async (articleId: string) => {
   // 🔍 CHECK IF ALREADY LIKED
   const { data: existingLike } = await supabase
     .from("likes")
-    .select(`
-      *,
-      likes(count),
-      dislikes(count)
-      `)
+    .select("*")
     .eq("user_id", user.id)
     .eq("article_id", articleId)
     .maybeSingle();
@@ -85,11 +81,7 @@ const toggleDislike = async (articleId: string) => {
 
   const { data: existing } = await supabase
     .from("dislikes")
-    .select(`
-      *,
-      likes(count),
-      dislikes(count)
-      `)
+    .select("*")
     .eq("user_id", user.id)
     .eq("article_id", articleId)
     .maybeSingle();
@@ -118,7 +110,8 @@ const toggleDislike = async (articleId: string) => {
       .from("articles")
       .select(`
         *,
-        likes(count)
+        likes(count),
+        dislikes(count)
         `)
       .order("created_at", { ascending: false });
 
