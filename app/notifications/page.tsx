@@ -17,23 +17,26 @@ export default function Notifications() {
   const [notifications, setNotifications] = useState<Notification[]>([]);
 
   useEffect(() => {
-    const fetchNotifications = async () => {
-      const { data: userData } = await supabase.auth.getUser();
-      const user = userData.user;
-
-      if (!user) return;
-
-      const { data } = await supabase
-        .from("notifications")
-        .select("*")
-        .eq("user_id", user.id)
-        .order("created_at", { ascending: false });
-
-      setNotifications(data || []);
-    };
-
     fetchNotifications();
   }, []);
+const fetchNotifications = async () => {
+  const { data: userData } = await supabase.auth.getUser();
+
+  const user = userData?.user;
+
+  if (!user) return;
+
+  console.log("LOGGED USER:", user.id);
+
+  const { data } = await supabase
+    .from("notifications")
+    .select("*")
+    .eq("user_id", user.id)
+    .order("created_at", { ascending: false });
+
+  setNotifications(data || []);
+};
+
 
   return (
     <>
