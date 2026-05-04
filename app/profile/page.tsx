@@ -66,6 +66,38 @@ export default function ProfilePage() {
     await supabase.auth.signOut();
     window.location.href = "/";
   };
+  const loadUser = async () => {
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) return;
+
+  // 🔍 check profile
+  let { data: profileData } = await supabase
+    .from("profiles")
+    .select("*")
+    .eq("id", user.id)
+    .single();
+
+  // 🚨 IF NOT EXISTS → CREATE
+  if (!profileData) {
+    const { data: newProfile } = await supabase
+      .from("profiles")
+      .insert([
+        {
+          id: user.id,
+          username: user.email?.split("@")[0],
+        },
+      ])
+      .select()
+      .single();
+
+    profileData = newProfile;
+  }
+
+  setProfile(profileData);
+};
 
   return (
     <>
