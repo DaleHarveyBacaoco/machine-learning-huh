@@ -134,6 +134,7 @@ const addComment = async (articleId: string) => {
     return;
   }
   console.log("Comment successs, Now Creating Notifications");
+  console.log("TEST: about to insert notification manually");
 
   // ✅ INSERT COMMENT
   const { error } = await supabase.from("comments").insert([
@@ -150,38 +151,29 @@ const addComment = async (articleId: string) => {
   }
 
   // 🔥 GET ARTICLE OWNER
+console.log("STEP 1: comment inserted");
+
 const { data: articleData, error: articleError } = await supabase
   .from("articles")
   .select("user_id")
   .eq("id", articleId)
   .single();
 
-if (articleError) {
-  console.log("ARTICLE ERROR:", articleError.message);
-  return;
-}
+console.log("STEP 2: article fetched", articleData, articleError);
 
 const articleOwnerId = articleData?.user_id;
 
-console.log("ARTICLE OWNER:", articleOwnerId);
+console.log("STEP 3: owner =", articleOwnerId);
 
-if (articleOwnerId && articleOwnerId !== user.id) {
-  const { error: notifError } = await supabase
-    .from("notifications")
-    .insert([
-      {
-        user_id: articleOwnerId,
-        message: "Someone commented on your article",
-        article_id: articleId,
-      },
-    ]);
+const result = await supabase.from("notifications").insert([
+  {
+    user_id: articleOwnerId,
+    message: "Someone commented on your article",
+    article_id: articleId,
+  },
+]);
 
-  if (notifError) {
-    console.log("NOTIFICATION ERROR:", notifError.message);
-  } else {
-    console.log("NOTIFICATION CREATED ✅");
-  }
-}
+console.log("STEP 4: notification result =", result);
 
   // ✅ RESET INPUT
   setCommentText({
