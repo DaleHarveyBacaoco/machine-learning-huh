@@ -229,12 +229,12 @@ console.log("STEP 4: notification result =", result);
             <div
               id={article.id} key={article.id}
               style={{
-                background: "#fff",
-                border: "1px solid #E5E7EB",
-                borderRadius: "10px",
-                padding: "16px",
-                marginTop: "15px",
-                boxShadow: "0 2px 6px rgba(0,0,0,0.04)",
+background: "#FFFFFF",
+border: "1px solid #E5E7EB",
+borderRadius: "12px",
+padding: "18px",
+marginTop: "15px",
+boxShadow: "0 6px 18px rgba(0,0,0,0.06)",
               }}
             >
               {/* TITLE */}
@@ -270,7 +270,7 @@ console.log("STEP 4: notification result =", result);
       borderRadius: "6px",
       border: "1px solid #E5E7EB",
       cursor: "pointer",
-      background: "F9FAFB",
+      background: "E5E7EB",
       color:"#111827",
       fontWeight:"600",
     }}
@@ -285,7 +285,7 @@ console.log("STEP 4: notification result =", result);
       borderRadius: "6px",
       border: "1px solid #E5E7EB",
       cursor: "pointer",
-      background: "F9FAFB",
+      background: "E5E7EB",
       color:"#111827",
       fontWeight:"600",
     }}
@@ -299,6 +299,7 @@ console.log("STEP 4: notification result =", result);
     borderRadius: "6px",
     border: "1px solid #E5E7EB",
     cursor: "pointer",
+    color:"black",
     background: "white",
   }}
 >
