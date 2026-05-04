@@ -28,7 +28,7 @@ export default function Home() {
         }}
       >
         <h1 style={{ fontSize: "32px", marginBottom: "10px" }}>
-          📝 MIST APP
+          MIST APP
         </h1>
 
         <p style={{ marginBottom: "20px" }}>

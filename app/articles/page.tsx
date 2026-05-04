@@ -229,7 +229,7 @@ console.log("STEP 4: notification result =", result);
             <div
               id={article.id} key={article.id}
               style={{
-background: "#FFFFFF",
+background: "#829dd3F",
 border: "1px solid #E5E7EB",
 borderRadius: "12px",
 padding: "18px",

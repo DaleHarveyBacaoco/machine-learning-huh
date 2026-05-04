@@ -85,7 +85,7 @@ export default function ProfilePage() {
             style={{
               marginTop: "15px",
               padding: "10px",
-              background: "#F3F4F6",
+              background: "#829dd3",
               borderRadius: "8px",
               fontSize: "13px",
               color: "#374151",
