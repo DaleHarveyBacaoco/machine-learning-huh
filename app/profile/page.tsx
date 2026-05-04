@@ -67,7 +67,7 @@ const loadUser = async () => {
       .from("profile-images")
       .getPublicUrl(filePath);
 
-    const avatarUrl = data.publicUrl;
+    const avatarUrl = data?.publicUrl;
 
     await supabase
       .from("profiles")
@@ -91,12 +91,14 @@ const loadUser = async () => {
         {/* AVATAR */}
         <div>
           <img
-            src={profile?.avatar_url || "https://via.placeholder.com/100"}
+            src={profile?.avatar_url}
+            alt="Profile"
             style={{
               width: 100,
               height: 100,
               borderRadius: "50%",
               objectFit: "cover",
+              border: "2px solid #E5E7EB",
             }}
           />
         </div>
