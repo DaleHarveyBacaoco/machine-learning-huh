@@ -1,54 +1,52 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { useEffect, useState } from "react";
 import { supabase } from "../../lib/supabaseClient";
 
 export default function Navbar() {
-  const router = useRouter();
+  const [user, setUser] = useState<any>(null);
 
-  const logout = async () => {
-    await supabase.auth.signOut();
-    router.push("/");
-  };
+  useEffect(() => {
+    const getUser = async () => {
+      const { data } = await supabase.auth.getUser();
+      setUser(data.user);
+    };
+    getUser();
+  }, []);
 
   return (
-    <div
+    <nav
       style={{
-        width: "100%",
-        backgroundColor: "#4f46e5",
-        padding: "15px 20px",
+        background: "#ffffff",
+        borderBottom: "1px solid #E5E7EB",
+        padding: "12px 20px",
         display: "flex",
         justifyContent: "space-between",
         alignItems: "center",
-        color: "white",
       }}
     >
-      {/* LEFT SIDE */}
-<img
-  src="/logo.png"
-  alt="Logo"
-  className="logo"
-  onClick={() => router.push("/dashboard")}
-/>
-      {/* RIGHT SIDE */}
-      <div style={{ display: "flex", gap: "15px" }}>
-        <button onClick={() => router.push("/articles")}>
-          Articles
-        </button>
+      {/* LEFT */}
+      <div style={{ display: "flex", gap: "15px", alignItems: "center" }}>
+        <Link href="/" style={{ fontWeight: "700", fontSize: "18px" }}>
+          MyApp 🚀
+        </Link>
 
-        <button onClick={() => router.push("/create")}>
-          Create
-        </button>
-
-        <button onClick={() => router.push("/notifications")}>
-          Notifications
-        </button>
-
-        <button onClick={logout}>
-          Logout
-        </button>
-        <a href="/profile">Profile</a>
+        <Link href="/articles">Articles</Link>
+        <Link href="/create">Create</Link>
       </div>
-    </div>
+
+      {/* RIGHT */}
+      <div style={{ display: "flex", gap: "15px", alignItems: "center" }}>
+        {user ? (
+          <>
+            <Link href="/notifications">🔔</Link>
+            <Link href="/profile">Profile</Link>
+          </>
+        ) : (
+          <Link href="/auth">Login</Link>
+        )}
+      </div>
+    </nav>
   );
 }
