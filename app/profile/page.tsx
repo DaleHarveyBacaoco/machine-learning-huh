@@ -6,15 +6,61 @@ import Navbar from "../components/Navbar";
 
 export default function ProfilePage() {
   const [user, setUser] = useState<any>(null);
+  const [profile, setProfile] = useState<any>(null);
+  const [uploading, setUploading] = useState(false);
 
   useEffect(() => {
-    const getUser = async () => {
+    const loadUser = async () => {
       const { data } = await supabase.auth.getUser();
-      setUser(data.user);
+      const user = data.user;
+      setUser(user);
+
+      if (user) {
+        const { data: profileData } = await supabase
+          .from("profiles")
+          .select("*")
+          .eq("id", user.id)
+          .single();
+
+        setProfile(profileData);
+      }
     };
 
-    getUser();
+    loadUser();
   }, []);
+
+  const uploadAvatar = async (e: any) => {
+    const file = e.target.files[0];
+    if (!file || !user) return;
+
+    setUploading(true);
+
+    const filePath = `${user.id}/${file.name}`;
+
+    const { error } = await supabase.storage
+      .from("profile-images")
+      .upload(filePath, file, { upsert: true });
+
+    if (error) {
+      alert(error.message);
+      setUploading(false);
+      return;
+    }
+
+    const { data } = supabase.storage
+      .from("profile-images")
+      .getPublicUrl(filePath);
+
+    const avatarUrl = data.publicUrl;
+
+    await supabase
+      .from("profiles")
+      .update({ avatar_url: avatarUrl })
+      .eq("id", user.id);
+
+    setProfile({ ...profile, avatar_url: avatarUrl });
+    setUploading(false);
+  };
 
   const logout = async () => {
     await supabase.auth.signOut();
@@ -25,59 +71,48 @@ export default function ProfilePage() {
     <>
       <Navbar />
 
-      <div
-        style={{
-          maxWidth: "500px",
-          margin: "50px auto",
-          padding: "20px",
-          border: "1px solid #E5E7EB",
-          borderRadius: "12px",
-          background: "#fff",
-          textAlign: "center",
-        }}
-      >
-        {/* PROFILE IMAGE */}
-        <div
-          style={{
-            width: "80px",
-            height: "80px",
-            borderRadius: "50%",
-            background: "#E5E7EB",
-            margin: "0 auto 15px",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            fontSize: "12px",
-            color: "#6B7280",
-          }}
-        >
-          Photo
+      <div style={{ maxWidth: 500, margin: "50px auto", textAlign: "center" }}>
+        {/* AVATAR */}
+        <div>
+          <img
+            src={profile?.avatar_url || "https://via.placeholder.com/100"}
+            style={{
+              width: 100,
+              height: 100,
+              borderRadius: "50%",
+              objectFit: "cover",
+            }}
+          />
         </div>
 
-        {/* EMAIL */}
-        <h2 style={{ fontSize: "20px", fontWeight: "700" }}>
-          {user?.email}
-        </h2>
+        {/* UPLOAD */}
+        <input type="file" onChange={uploadAvatar} />
+        {uploading && <p>Uploading...</p>}
 
-        {/* CREATED DATE */}
-        <p style={{ color: "#6B7280", fontSize: "13px" }}>
+        {/* USERNAME */}
+        <h2>{profile?.username || user?.email}</h2>
+
+        {/* EMAIL */}
+        <p>{user?.email}</p>
+
+        {/* DATE */}
+        <p style={{ color: "gray" }}>
           Joined:{" "}
           {user?.created_at
             ? new Date(user.created_at).toLocaleDateString()
-            : "Loading..."}
+            : ""}
         </p>
 
         {/* LOGOUT */}
         <button
           onClick={logout}
           style={{
-            marginTop: "15px",
+            marginTop: 20,
             padding: "10px 15px",
-            background: "#EF4444",
+            background: "red",
             color: "white",
             border: "none",
-            borderRadius: "8px",
-            cursor: "pointer",
+            borderRadius: 8,
           }}
         >
           Logout

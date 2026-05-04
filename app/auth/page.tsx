@@ -37,7 +37,24 @@ export default function AuthPage() {
     } else {
       setMessage("Check your email to confirm your account.");
     }
+    const { data: userData } = await supabase.auth.signUp({
+  email,
+  password,
+});
+
+const user = userData.user;
+
+if (user) {
+  await supabase.from("profiles").insert([
+    {
+      id: user.id,
+      username: email.split("@")[0],
+      avatar_url: null,
+    },
+  ]);
+}
   };
+  
 
   return (
     <div
