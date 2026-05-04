@@ -90,8 +90,8 @@ const id = Array.isArray(params.id) ? params.id[0] : params.id;
         <div
           style={{
             background: "#fff",
-            border: "1px solid #E5E7EB",
-            borderRadius: "12px",
+            border: "5px solid #E5E7EB",
+            borderRadius: "16px",
             padding: "20px",
             boxShadow: "0 6px 20px rgba(0,0,0,0.05)",
           }}
