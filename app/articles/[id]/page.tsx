@@ -13,8 +13,8 @@ type Comment = {
 };
 
 export default function ArticleDetail() {
-  const { id } = useParams();
-
+  const params = useParams();
+const id = Array.isArray(params.id) ? params.id[0] : params.id;
   const [article, setArticle] = useState<any>(null);
   const [comments, setComments] = useState<Comment[]>([]);
   const [commentText, setCommentText] = useState("");
@@ -39,7 +39,7 @@ export default function ArticleDetail() {
     const { data } = await supabase
       .from("comments")
       .select("*")
-      .eq("article_id", id)
+      .eq("article_id", String(id))
       .order("created_at", { ascending: false });
 
     setComments(data || []);
