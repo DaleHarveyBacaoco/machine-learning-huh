@@ -286,7 +286,7 @@ boxShadow: "0 6px 18px rgba(0,0,0,0.06)",
       border: "1px solid #E5E7EB",
       cursor: "pointer",
       background: "E5E7EB",
-      color:"#111827",
+      color:"#4662a0ff",
       fontWeight:"600",
     }}
   >
