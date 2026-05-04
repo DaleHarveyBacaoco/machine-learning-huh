@@ -18,7 +18,7 @@
 body {
   margin: 0;
   padding: 0;
-    background: #829dd3;
+    background: #3779ff;
   color: #111827;
   font-family: var(--font-sans), system-ui, sans-serif;
 }
@@ -126,4 +126,9 @@ small {
 
 .logo:hover {
   transform: scale(1.1);
+}
+body {
+  background: #F3F4F6;
+  color: #111827;
+  font-family: Arial, sans-serif;
 }

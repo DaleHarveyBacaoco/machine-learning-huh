@@ -47,30 +47,7 @@ export default function CreateArticle() {
   return (
         <>
   <Navbar />
-  <div className="container">
-    {/* your create form */}
-  </div>
-  <div className="container">
-  <div className="card">
-    <h2>Create Article</h2>
 
-    <input
-      placeholder="Title"
-      value={title}
-      onChange={(e) => setTitle(e.target.value)}
-    />
-
-    <textarea
-      placeholder="Write your article..."
-      value={content}
-      onChange={(e) => setContent(e.target.value)}
-    />
-
-    <button onClick={createArticle}>
-      Post Article
-    </button>
-  </div>
-</div>
 </>
   );
 }
