@@ -13,7 +13,7 @@ type Article = {
   created_at: string;
   user_id: string;
   likes: {count: number }[];
-  dislikes: number;
+  dislikes: { count: number}[];
 };
 
 type Comment = {
@@ -70,14 +70,41 @@ const toggleLike = async (articleId: string) => {
   fetchArticles();
 };
 
-const dislikeArticle = async (id: string, currentDislikes: number) => {
-  const { error } = await supabase
-    .from("articles")
-    .update({ dislikes: (currentDislikes || 0) + 1 })
-    .eq("id", id);
+const toggleDislike = async (articleId: string) => {
+  const { data: userData } = await supabase.auth.getUser();
+  const user = userData.user;
 
-  if (error) {
-    console.log("DISLIKE ERROR:", error.message);
+  if (!user) {
+    alert("Login first!");
+    return;
+  }
+
+  const { data: existing } = await supabase
+    .from("dislikes")
+    .select(`
+      *,
+      likes(count),
+      dislikes(count)
+      `)
+    .eq("user_id", user.id)
+    .eq("article_id", articleId)
+    .maybeSingle();
+
+  if (existing) {
+    // remove dislike
+    await supabase
+      .from("dislikes")
+      .delete()
+      .eq("user_id", user.id)
+      .eq("article_id", articleId);
+  } else {
+    // add dislike
+    await supabase.from("dislikes").insert([
+      {
+        user_id: user.id,
+        article_id: articleId,
+      },
+    ]);
   }
 
   fetchArticles();
@@ -223,7 +250,7 @@ const dislikeArticle = async (id: string, currentDislikes: number) => {
   </button>
 
   <button
-    onClick={() => dislikeArticle(article.id, article.dislikes || 0)}
+    onClick={() => toggleDislike(article.id)}
     style={{
       padding: "5px 10px",
       borderRadius: "6px",
@@ -232,7 +259,7 @@ const dislikeArticle = async (id: string, currentDislikes: number) => {
       background: "white",
     }}
   >
-    👎 {article.dislikes || 0}
+    👎 {article.dislikes?.[0]?.count || 0}
   </button>
   <button
   onClick={() => shareArticle(article.id)}
