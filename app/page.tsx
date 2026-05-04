@@ -1,89 +1,71 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { supabase } from "../lib/supabaseClient";
-import Link from "next/link";
-import Navbar from "./components/Navbar";
+import { useRouter } from "next/navigation";
 
-type Article = {
-  id: string;
-  title: string;
-  content: string;
-  created_at: string;
-  likes: { count: number }[];
-};
-
-export default function HomePage() {
-  const [articles, setArticles] = useState<Article[]>([]);
-
-  const fetchTopArticles = async () => {
-    const { data } = await supabase
-      .from("articles")
-      .select(`
-        *,
-        likes(count)
-      `);
-
-    const sorted = (data || [])
-      .sort((a, b) => (b.likes?.[0]?.count || 0) - (a.likes?.[0]?.count || 0))
-      .slice(0, 5);
-
-    setArticles(sorted);
-  };
-
-  useEffect(() => {
-    fetchTopArticles();
-  }, []);
+export default function Home() {
+  const router = useRouter();
 
   return (
-    <>
-      <Navbar />
-
+    <div
+      style={{
+        height: "100vh",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        background: "linear-gradient(to right, #b8acff, #6366f1)",
+        color: "white",
+        textAlign: "center",
+        padding: "20px",
+      }}
+    >
       <div
         style={{
-          maxWidth: "800px",
-          margin: "40px auto",
-          padding: "0 20px",
+          background: "rgba(255,255,255,0.1)",
+          padding: "40px",
+          borderRadius: "12px",
+          backdropFilter: "blur(10px)",
+          maxWidth: "400px",
         }}
       >
-        <h1 style={{ fontSize: "26px", fontWeight: "800" }}>
-          🔥 Top 5 Articles
+        <h1 style={{ fontSize: "32px", marginBottom: "10px" }}>
+          MIST APP
         </h1>
 
-        <p style={{ color: "#6B7280", marginBottom: "20px" }}>
-          Most liked posts in your community
+        <p style={{ marginBottom: "20px" }}>
+          Create, share, and interact with articles. 
+          So you wont MIST a thing.
         </p>
+<div style={{ marginTop: "20px" }}>
+  <button
+    onClick={() => router.push("/auth?mode=login")}
+    style={{
+      padding: "10px 20px",
+      marginRight: "10px",
+      borderRadius: "6px",
+      backgroundColor: "white",
+      color: "#4f46e5",
+      cursor: "pointer",
+      fontWeight: "bold",
+    }}
+  >
+    Login
+  </button>
 
-        {articles.map((article) => (
-          <Link
-            key={article.id}
-            href={`/articles/${article.id}`}
-            style={{
-              display: "block",
-              background: "#fff",
-              border: "1px solid #E5E7EB",
-              borderRadius: "12px",
-              padding: "16px",
-              marginBottom: "12px",
-              textDecoration: "none",
-              color: "#111827",
-              boxShadow: "0 4px 10px rgba(0,0,0,0.04)",
-            }}
-          >
-            <h3 style={{ fontWeight: "700", fontSize: "18px" }}>
-              {article.title}
-            </h3>
-
-            <p style={{ fontSize: "13px", color: "#6B7280" }}>
-              {article.content.slice(0, 100)}...
-            </p>
-
-            <small style={{ color: "#4F46E5", fontWeight: "600" }}>
-              👍 {article.likes?.[0]?.count || 0} likes
-            </small>
-          </Link>
-        ))}
+  <button
+    onClick={() => router.push("/auth?mode=signup")}
+    style={{
+      padding: "10px 20px",
+      borderRadius: "6px",
+      border: "1px solid white",
+      background: "transparent",
+      color: "white",
+      cursor: "pointer",
+    }}
+  >
+    Sign Up
+  </button>
+</div>
       </div>
-    </>
+    </div>
   );
 }
