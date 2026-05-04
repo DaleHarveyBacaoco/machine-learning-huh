@@ -51,7 +51,7 @@ export default function Navbar() {
         objectFit: "contain",
       }}
     />
-    MyApp
+    MIST
   </Link>
 
   {/* NAV LINKS */}
@@ -60,16 +60,28 @@ export default function Navbar() {
 
 </div>
       {/* RIGHT */}
-      <div style={{ display: "flex", gap: "15px", alignItems: "center" }}>
-        {user ? (
-          <>
-            <Link href="/notifications">🔔</Link>
-            <Link href="/profile">Profile</Link>
-          </>
-        ) : (
-          <Link href="/auth">Login</Link>
-        )}
-      </div>
+{user ? (
+  <>
+    <Link href="/notifications">🔔</Link>
+
+    <Link href="/profile" style={{ display: "flex", alignItems: "center" }}>
+      <img
+        src={user.user_metadata?.avatar_url || "/default-avatar.png"}
+        alt="avatar"
+        style={{
+          width: "32px",
+          height: "32px",
+          borderRadius: "50%",
+          objectFit: "cover",
+          border: "2px solid #E5E7EB",
+          cursor: "pointer",
+        }}
+      />
+    </Link>
+  </>
+) : (
+  <Link href="/auth">Login</Link>
+)}
     </nav>
   );
 }
