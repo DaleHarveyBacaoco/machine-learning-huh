@@ -28,14 +28,37 @@ export default function Navbar() {
     >
       {/* LEFT */}
       <div style={{ display: "flex", gap: "15px", alignItems: "center" }}>
-        <Link href="/" style={{ fontWeight: "700", fontSize: "18px" }}>
-          MyApp 🚀
-        </Link>
+  
+  {/* 🔥 LOGO (PUT IT FIRST) */}
+  <Link
+    href="/"
+    style={{
+      display: "flex",
+      alignItems: "center",
+      gap: "8px",
+      fontWeight: "800",
+      fontSize: "18px",
+      color: "#111827",
+      textDecoration: "none",
+    }}
+  >
+    <img
+      src="/logo.png"
+      alt="Logo"
+      style={{
+        width: "28px",
+        height: "28px",
+        objectFit: "contain",
+      }}
+    />
+    MyApp
+  </Link>
 
-        <Link href="/articles">Articles</Link>
-        <Link href="/create">Create</Link>
-      </div>
+  {/* NAV LINKS */}
+  <Link href="/articles">Articles</Link>
+  <Link href="/create">Create</Link>
 
+</div>
       {/* RIGHT */}
       <div style={{ display: "flex", gap: "15px", alignItems: "center" }}>
         {user ? (

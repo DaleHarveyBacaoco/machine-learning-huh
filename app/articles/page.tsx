@@ -270,7 +270,9 @@ console.log("STEP 4: notification result =", result);
       borderRadius: "6px",
       border: "1px solid #E5E7EB",
       cursor: "pointer",
-      background: "white",
+      background: "F9FAFB",
+      color:"#111827",
+      fontWeight:"600",
     }}
   >
     👍 {article.likes?.[0]?.count || 0}
@@ -283,7 +285,9 @@ console.log("STEP 4: notification result =", result);
       borderRadius: "6px",
       border: "1px solid #E5E7EB",
       cursor: "pointer",
-      background: "white",
+      background: "F9FAFB",
+      color:"#111827",
+      fontWeight:"600",
     }}
   >
     👎 {article.dislikes?.[0]?.count || 0}
