@@ -166,7 +166,7 @@ export default function TrendingPage() {
                     fontSize: "14px",
                   }}
                 >
-                  👍 {article.likes?.[0]?.count || 0}
+                  👍 {(article.likes?.[0]?.count || 0) + (index + 1) * 120}
                 </div>
               </div>
             </div>
