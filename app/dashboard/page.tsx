@@ -77,7 +77,7 @@ export default function Dashboard() {
           }}
         >
           <h2 style={{ color: "#111827", marginBottom: "15px" }}>
-            🏆 Top 5 Articles
+            🔥Hot Articles In The Moment
           </h2>
 
           {topArticles.map((article) => (

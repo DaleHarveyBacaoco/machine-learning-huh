@@ -98,7 +98,14 @@ export default function Navbar() {
         >
           Create
         </Link>
-        <Link href="/trending">Top 5</Link>
+        <Link
+          href="/trending"
+          style={navStyle}
+          onMouseEnter={hoverIn}
+          onMouseLeave={hoverOut}
+        >
+          Trending
+        </Link>
       </div>
 
       {/* RIGHT SIDE */}

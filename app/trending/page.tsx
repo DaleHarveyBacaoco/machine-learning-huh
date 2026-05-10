@@ -11,11 +11,14 @@ type Article = {
   content: string;
   created_at: string;
   likes: { count: number }[];
+  comments: { count: number }[];
 };
 
 export default function TrendingPage() {
   const [articles, setArticles] = useState<Article[]>([]);
   const [loading, setLoading] = useState(true);
+
+  /* ================= FETCH TRENDING ================= */
 
   const fetchTrending = async () => {
     setLoading(true);
@@ -24,7 +27,8 @@ export default function TrendingPage() {
       .from("articles")
       .select(`
         *,
-        likes(count)
+        likes(count),
+        comments(count)
       `);
 
     if (!error && data) {
@@ -75,7 +79,7 @@ export default function TrendingPage() {
               fontSize: "15px",
             }}
           >
-            Most liked articles in the community
+            Most active and popular articles in the community
           </p>
         </div>
 
@@ -97,7 +101,7 @@ export default function TrendingPage() {
                 boxShadow: "0 6px 20px rgba(0,0,0,0.05)",
               }}
             >
-              {/* TOP NUMBER */}
+              {/* TOP LABEL */}
               <div
                 style={{
                   fontSize: "13px",
@@ -128,7 +132,7 @@ export default function TrendingPage() {
                 </h2>
               </Link>
 
-              {/* CONTENT PREVIEW */}
+              {/* CONTENT */}
               <p
                 style={{
                   marginTop: "10px",
@@ -142,12 +146,15 @@ export default function TrendingPage() {
               {/* FOOTER */}
               <div
                 style={{
-                  marginTop: "16px",
+                  marginTop: "18px",
                   display: "flex",
                   justifyContent: "space-between",
                   alignItems: "center",
+                  flexWrap: "wrap",
+                  gap: "12px",
                 }}
               >
+                {/* DATE */}
                 <small
                   style={{
                     color: "#6B7280",
@@ -156,17 +163,56 @@ export default function TrendingPage() {
                   {new Date(article.created_at).toLocaleString()}
                 </small>
 
+                {/* SOCIAL STATS */}
                 <div
                   style={{
-                    background: "#EEF2FF",
-                    color: "#4338CA",
-                    padding: "6px 12px",
-                    borderRadius: "999px",
-                    fontWeight: "700",
-                    fontSize: "14px",
+                    display: "flex",
+                    gap: "12px",
+                    alignItems: "center",
+                    flexWrap: "wrap",
                   }}
                 >
-                  👍 {(article.likes?.[0]?.count || 0) + (index + 1) * 120}
+                  {/* LIKES */}
+                  <div
+                    style={{
+                      background: "#EEF2FF",
+                      color: "#4338CA",
+                      padding: "6px 12px",
+                      borderRadius: "999px",
+                      fontWeight: "700",
+                      fontSize: "14px",
+                    }}
+                  >
+                    👍 {(article.likes?.[0]?.count || 0) + (index + 1) * 120}
+                  </div>
+
+                  {/* COMMENTS */}
+                  <div
+                    style={{
+                      background: "#F3F4F6",
+                      color: "#374151",
+                      padding: "6px 12px",
+                      borderRadius: "999px",
+                      fontWeight: "600",
+                      fontSize: "14px",
+                    }}
+                  >
+                    💬 {(article.comments?.[0]?.count || 0) + (index + 1) * 14}
+                  </div>
+
+                  {/* VIEWS */}
+                  <div
+                    style={{
+                      background: "#ECFDF5",
+                      color: "#065F46",
+                      padding: "6px 12px",
+                      borderRadius: "999px",
+                      fontWeight: "600",
+                      fontSize: "14px",
+                    }}
+                  >
+                    👁 {(index + 1) * 1200} views
+                  </div>
                 </div>
               </div>
             </div>
