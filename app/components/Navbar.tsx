@@ -98,6 +98,7 @@ export default function Navbar() {
         >
           Create
         </Link>
+        <Link href="/trending">Top 5</Link>
       </div>
 
       {/* RIGHT SIDE */}
