@@ -215,7 +215,7 @@ console.log("STEP 4: notification result =", result);
 
       <div
         style={{
-          background: "#F9FAFB",
+          background: "#BAE6FD",
           minHeight: "100vh",
           padding: "20px",
         }}
