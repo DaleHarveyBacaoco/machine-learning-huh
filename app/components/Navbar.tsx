@@ -27,19 +27,19 @@ export default function Navbar() {
   };
 
   const hoverIn = (e: any) => {
-    e.currentTarget.style.background = "#EEF2FF";
+    e.currentTarget.style.background = "#adbdf0ff";
     e.currentTarget.style.color = "#4F46E5";
   };
 
   const hoverOut = (e: any) => {
-    e.currentTarget.style.background = "transparent";
+    e.currentTarget.style.background = "adbdf0ff";
     e.currentTarget.style.color = "#374151";
   };
 
   return (
     <nav
       style={{
-        background: "#EEF2FF",
+        background: "#adbdf0ff",
         borderBottom: "1px solid #E5E7EB",
         padding: "12px 20px",
         display: "flex",
