@@ -20,7 +20,7 @@ export default function Home() {
     >
       <div
         style={{
-          background: "rgba(237, 174, 255, 0.87)",
+          background: "rgba(200, 0, 255, 0.87)",
           padding: "40px",
           borderRadius: "12px",
           backdropFilter: "blur(10px)",
