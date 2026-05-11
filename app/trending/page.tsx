@@ -93,7 +93,7 @@ export default function TrendingPage() {
             <div
               key={article.id}
               style={{
-                background: "#cac7c7",
+                background: "#ffffffff",
                 border: "1px solid #E5E7EB",
                 borderRadius: "16px",
                 padding: "22px",
