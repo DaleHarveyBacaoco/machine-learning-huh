@@ -12,7 +12,7 @@ export default function Home() {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        background: "linear-gradient(to right, #ffffffff, #38BDF8)",
+        background: "linear-gradient(to right, #363636ff, #38BDF8)",
         color: "white",
         textAlign: "center",
         padding: "20px",
@@ -37,8 +37,7 @@ export default function Home() {
           fontWeight:"500",
          }}
          >
-          Create, share, and interact with articles. 
-          So you wont MIST a thing.
+          More than MIST the eye.
         </p>
 <div style={{ marginTop: "20px" }}>
   <button
