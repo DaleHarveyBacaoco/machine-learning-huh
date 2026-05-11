@@ -39,7 +39,7 @@ export default function Navbar() {
   return (
     <nav
       style={{
-        background: "#ffffff",
+        background: "#EEF2FF",
         borderBottom: "1px solid #E5E7EB",
         padding: "12px 20px",
         display: "flex",
