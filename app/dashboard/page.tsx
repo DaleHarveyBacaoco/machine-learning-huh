@@ -62,7 +62,7 @@ export default function Dashboard() {
 
       <div
         style={{
-          background: "#BAE6FD",
+          background: "#ffffffff",
           minHeight: "100vh",
           padding: "30px",
           textAlign: "center",
