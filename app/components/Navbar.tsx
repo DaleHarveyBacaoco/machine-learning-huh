@@ -12,145 +12,103 @@ export default function Navbar() {
       const { data } = await supabase.auth.getUser();
       setUser(data.user);
     };
+
     getUser();
   }, []);
 
-  // 🔥 NAV STYLE
-  const navStyle = {
-    fontSize: "14px",
-    fontWeight: "600",
-    color: "#374151",
-    textDecoration: "none",
-    padding: "8px 12px",
-    borderRadius: "8px",
-    transition: "0.2s",
-  };
-
-  const hoverIn = (e: any) => {
-    e.currentTarget.style.background = "#adbdf0ff";
-    e.currentTarget.style.color = "#4F46E5";
-  };
-
-  const hoverOut = (e: any) => {
-    e.currentTarget.style.background = "adbdf0ff";
-    e.currentTarget.style.color = "#374151";
-  };
-
   return (
-    <nav
-      style={{
-        background: "#adbdf0ff",
-        borderBottom: "1px solid #E5E7EB",
-        padding: "12px 20px",
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
-      }}
-    >
+    <nav className="navbar">
       {/* LEFT SIDE */}
-{/* LEFT SIDE */}
-<div style={{ display: "flex", gap: "12px", alignItems: "center" }}>
-  
-  {/* LOGO + APP NAME */}
-  <Link
-    href="/"
-    style={{
-      display: "flex",
-      alignItems: "center",
-      gap: "10px",
-      fontWeight: "800",
-      fontSize: "18px",
-      color: "#111827",
-      textDecoration: "none",
-    }}
-  >
-    <img
-      src="/logo.png"
-      alt="Logo"
-      style={{
-        width: "30px",
-        height: "30px",
-        objectFit: "contain",
-      }}
-    />
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: "18px",
+        }}
+      >
+        {/* LOGO */}
+        <Link href="/" className="logo">
+          <img
+            src="/logo.png"
+            alt="logo"
+            style={{
+              width: "34px",
+              height: "34px",
+              borderRadius: "8px",
+              objectFit: "cover",
+            }}
+          />
 
-    {/* APP NAME BACK */}
-    <span style={{ letterSpacing: "0.5px" }}>
-      MIST
-    </span>
-  </Link>
-
-        {/* NAV LINKS */}
-        <Link
-          href="/articles"
-          style={navStyle}
-          onMouseEnter={hoverIn}
-          onMouseLeave={hoverOut}
-        >
-          Articles
+          <span
+            style={{
+              fontWeight: "800",
+              fontSize: "20px",
+              letterSpacing: "-0.5px",
+            }}
+          >
+            MIST
+          </span>
         </Link>
 
-        <Link
-          href="/create"
-          style={navStyle}
-          onMouseEnter={hoverIn}
-          onMouseLeave={hoverOut}
-        >
-          Create
-        </Link>
-        <Link
-          href="/trending"
-          style={navStyle}
-          onMouseEnter={hoverIn}
-          onMouseLeave={hoverOut}
-        >
-          Trending
-        </Link>
+        {/* NAVIGATION */}
+        <div className="nav-links">
+          <Link href="/articles" className="nav-link">
+            Articles
+          </Link>
+
+          <Link href="/trending" className="nav-link">
+            Trending
+          </Link>
+
+          <Link href="/create" className="nav-link">
+            Create
+          </Link>
+        </div>
       </div>
 
       {/* RIGHT SIDE */}
-      <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: "12px",
+        }}
+      >
         {user ? (
           <>
-            {/* NOTIFICATION */}
+            {/* NOTIFICATIONS */}
             <Link
               href="/notifications"
               style={{
-                fontSize: "18px",
-                padding: "6px 10px",
-                borderRadius: "8px",
                 textDecoration: "none",
-                color: "#374151",
+                fontSize: "22px",
+                display: "flex",
+                alignItems: "center",
               }}
-              onMouseEnter={hoverIn}
-              onMouseLeave={hoverOut}
             >
               🔔
             </Link>
 
             {/* PROFILE */}
-            <Link href="/profile">
+            <Link
+              href="/profile"
+              style={{
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
               <img
-                src={user.user_metadata?.avatar_url || "/default-avatar.png"}
+                src={
+                  user.user_metadata?.avatar_url ||
+                  "/default-avatar.png"
+                }
                 alt="avatar"
-                style={{
-                  width: "32px",
-                  height: "32px",
-                  borderRadius: "50%",
-                  objectFit: "cover",
-                  border: "2px solid #E5E7EB",
-                  cursor: "pointer",
-                }}
+                className="avatar"
               />
             </Link>
           </>
         ) : (
-          <Link
-            href="/auth"
-            style={navStyle}
-            onMouseEnter={hoverIn}
-            onMouseLeave={hoverOut}
-          >
+          <Link href="/auth" className="nav-link">
             Login
           </Link>
         )}

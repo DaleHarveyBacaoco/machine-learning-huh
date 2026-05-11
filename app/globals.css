@@ -211,3 +211,28 @@ button:hover {
     padding: 18px;
   }
 }
+/* ================= MOBILE NAVBAR ================= */
+
+@media (max-width: 768px) {
+
+  .navbar {
+    padding: 12px 14px;
+  }
+
+  .logo span {
+    display: none;
+  }
+
+  .nav-links {
+    gap: 10px;
+  }
+
+  .nav-link {
+    font-size: 13px;
+  }
+
+  .avatar {
+    width: 34px;
+    height: 34px;
+  }
+}
