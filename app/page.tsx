@@ -12,7 +12,7 @@ export default function Home() {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        background: "linear-gradient(to right, #4973ffff, #6366f1)",
+        background: "linear-gradient(to right, #ffffffff, #38BDF8)",
         color: "white",
         textAlign: "center",
         padding: "20px",
@@ -20,7 +20,7 @@ export default function Home() {
     >
       <div
         style={{
-          background: "rgba(211, 211, 211, 0.1)",
+          background: "rgba(189, 114, 114, 0.1)",
           padding: "40px",
           borderRadius: "12px",
           backdropFilter: "blur(10px)",
@@ -31,7 +31,12 @@ export default function Home() {
           MIST APP
         </h1>
 
-        <p style={{ marginBottom: "20px" }}>
+        <p 
+        style={{
+          color: "#ffff",
+          fontWeight:"500",
+         }}
+         >
           Create, share, and interact with articles. 
           So you wont MIST a thing.
         </p>
@@ -43,7 +48,7 @@ export default function Home() {
       marginRight: "10px",
       borderRadius: "6px",
       backgroundColor: "cac7c7",
-      color: "#4f46e5",
+      color: "#ffffffff",
       cursor: "pointer",
       fontWeight: "bold",
     }}
