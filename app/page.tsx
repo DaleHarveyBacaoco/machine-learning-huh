@@ -12,7 +12,7 @@ export default function Home() {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        background: "linear-gradient(to right, #626262ff, #86d5ffff)",
+        background: "linear-gradient(to right, #626262ff, #ffffffff)",
         color: "white",
         textAlign: "center",
         padding: "20px",
@@ -20,7 +20,7 @@ export default function Home() {
     >
       <div
         style={{
-          background: "rgba(255, 255, 255, 0.87)",
+          background: "rgba(108, 159, 255, 0.87)",
           padding: "40px",
           borderRadius: "12px",
           backdropFilter: "blur(10px)",
