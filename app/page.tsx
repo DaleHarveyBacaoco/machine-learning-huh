@@ -12,7 +12,7 @@ export default function Home() {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        background: "linear-gradient(to right, #b8acff, #6366f1)",
+        background: "linear-gradient(to right, #4973ffff, #6366f1)",
         color: "white",
         textAlign: "center",
         padding: "20px",
@@ -20,7 +20,7 @@ export default function Home() {
     >
       <div
         style={{
-          background: "rgba(255,255,255,0.1)",
+          background: "rgba(211, 211, 211, 0.1)",
           padding: "40px",
           borderRadius: "12px",
           backdropFilter: "blur(10px)",
@@ -42,7 +42,7 @@ export default function Home() {
       padding: "10px 20px",
       marginRight: "10px",
       borderRadius: "6px",
-      backgroundColor: "white",
+      backgroundColor: "cac7c7",
       color: "#4f46e5",
       cursor: "pointer",
       fontWeight: "bold",

@@ -114,7 +114,7 @@ export default function ArticleDetail() {
         {/* ARTICLE CARD */}
         <div
           style={{
-            background: "#FFFFFF",
+            background: "#ffffffff",
             border: "1px solid #E5E7EB",
             borderRadius: "18px",
             padding: "30px",

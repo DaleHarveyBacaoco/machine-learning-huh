@@ -34,7 +34,7 @@ export default function AuthPage() {
         height: "100vh",
         justifyContent: "center",
         alignItems: "center",
-        background: "#F9FAFB",
+        background: "#cac7c7",
       }}
     >
       <div

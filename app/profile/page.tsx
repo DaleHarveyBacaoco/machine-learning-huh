@@ -39,7 +39,7 @@ export default function ProfilePage() {
       <div
         style={{
           minHeight: "100vh",
-          background: "#F9FAFB",
+          background: "#bebebeff",
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
