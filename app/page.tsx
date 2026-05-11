@@ -12,7 +12,7 @@ export default function Home() {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        background: "linear-gradient(to right, #7369ffff, #60c9f6ff)",
+        background: "linear-gradient(to right, #c9c5ffff, #ffffffff)",
         color: "white",
         textAlign: "center",
         padding: "20px",
