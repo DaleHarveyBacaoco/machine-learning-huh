@@ -12,7 +12,7 @@ export default function Home() {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        background: "#ffff",
+        background: "#d5d5d5ff",
         color: "white",
         textAlign: "center",
         padding: "20px",
@@ -20,7 +20,7 @@ export default function Home() {
     >
       <div
         style={{
-          background: "rgba(124, 155, 255, 1)",
+          background: "#ffff",
           padding: "40px",
           borderRadius: "12px",
           backdropFilter: "blur(10px)",
@@ -33,7 +33,7 @@ export default function Home() {
 
         <p 
         style={{
-          color: "#ffff",
+          color: "#646464ff",
           fontWeight:"500",
          }}
          >
