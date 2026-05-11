@@ -63,7 +63,7 @@ export default function Home() {
       borderRadius: "6px",
       border: "1px solid white",
       background: "transparent",
-      color: "white",
+      color: "#000000ff",
       cursor: "pointer",
     }}
   >
