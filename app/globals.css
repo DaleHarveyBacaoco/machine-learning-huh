@@ -144,7 +144,7 @@ button:hover {
 }
 
 .nav-link {
-  color: var(--text);
+  color: var(white);
   text-decoration: none;
   font-weight: 700;
   font-size: 15px;
@@ -152,7 +152,8 @@ button:hover {
 }
 
 .nav-link:hover {
-  color: var(--primary);
+  color: #E0F2FE;
+  opacity: 0.9;
 }
 
 /* ================= LOGO ================= */
@@ -163,7 +164,7 @@ button:hover {
   gap: 10px;
 
   text-decoration: none;
-  color: var(--text);
+  color: var(white);
 
   font-weight: 800;
   font-size: 20px;
