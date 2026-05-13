@@ -35,6 +35,7 @@ export default function ProfilePage() {
   return (
     <>
       <Navbar />
+      <p style={{ padding: "20px" }}>Loading Profile...</p>
 
       <div
         style={{

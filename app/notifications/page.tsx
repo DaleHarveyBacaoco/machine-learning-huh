@@ -41,6 +41,7 @@ const fetchNotifications = async () => {
   return (
     <>
       <Navbar />
+      <p style={{ padding: "20px" }}>Loading Notifications...</p>
       <div className="container">
         <h2>Notifications 🔔</h2>
 

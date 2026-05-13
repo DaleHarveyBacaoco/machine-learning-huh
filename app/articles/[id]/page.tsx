@@ -36,15 +36,20 @@ export default function ArticleDetail() {
 
   /* ================= FETCH COMMENTS ================= */
 
-  const fetchComments = async () => {
-    const { data } = await supabase
-      .from("comments")
-      .select("*")
-      .eq("article_id", id)
-      .order("created_at", { ascending: false });
+const fetchComments = async () => {
+  if (!id) return;
 
-    setComments(data || []);
-  };
+  const { data, error } = await supabase
+    .from("comments")
+    .select("*")
+    .eq("article_id", id)
+    .order("created_at", { ascending: false });
+
+  console.log("FETCHED COMMENTS:", data);
+  console.log("COMMENT ERROR:", error);
+
+  setComments(data || []);
+};
 
   /* ================= ADD COMMENT ================= */
 
@@ -75,8 +80,10 @@ export default function ArticleDetail() {
     // CLEAR INPUT
     setCommentText("");
 
+    await fetchComments();
+
     // REFRESH COMMENTS
-    fetchComments();
+
   };
 
   /* ================= INIT ================= */

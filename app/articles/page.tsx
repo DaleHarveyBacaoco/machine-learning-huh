@@ -212,6 +212,7 @@ console.log("STEP 4: notification result =", result);
   return (
     <>
       <Navbar />
+      <p style={{ padding: "20px" }}>Loading article...</p>
 
       <div
         style={{
