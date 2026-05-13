@@ -59,7 +59,7 @@ export default function Dashboard() {
   return (
     <>
       <Navbar />
-      <p style={{ padding: "20px" }}>Loading Dashboard...</p>
+  
 
       <div
         style={{

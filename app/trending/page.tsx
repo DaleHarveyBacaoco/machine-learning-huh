@@ -52,7 +52,7 @@ export default function TrendingPage() {
   return (
     <>
       <Navbar />
-      <p style={{ padding: "20px" }}>Loading Trending...</p>
+
 
       <div
         style={{

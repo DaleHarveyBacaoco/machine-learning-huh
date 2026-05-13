@@ -35,13 +35,21 @@ const fetchNotifications = async () => {
     .order("created_at", { ascending: false });
 
   setNotifications(data || []);
+      return (
+        <>
+          <Navbar />
+          <div style={{ textAlign: "center", marginTop: "80px" }}>
+            <p>Loading profile...</p>
+          </div>
+        </>
+      );
 };
 
 
   return (
     <>
       <Navbar />
-      <p style={{ padding: "20px" }}>Loading Notifications...</p>
+ 
       <div className="container">
         <h2>Notifications 🔔</h2>
 

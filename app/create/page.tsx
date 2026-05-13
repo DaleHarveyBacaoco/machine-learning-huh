@@ -47,7 +47,7 @@ export default function CreateArticle() {
   return (
         <>
   <Navbar />
-  <p style={{ padding: "20px" }}>Loading Create page...</p>
+
   <div className="container">
     {/* your create form */}
   </div>
