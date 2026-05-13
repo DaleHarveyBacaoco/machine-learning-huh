@@ -35,14 +35,7 @@ const fetchNotifications = async () => {
     .order("created_at", { ascending: false });
 
   setNotifications(data || []);
-      return (
-        <>
-          <Navbar />
-          <div style={{ textAlign: "center", marginTop: "80px" }}>
-            <p>Loading profile...</p>
-          </div>
-        </>
-      );
+  
 };
 
 
