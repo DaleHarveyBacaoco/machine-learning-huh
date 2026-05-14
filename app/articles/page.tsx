@@ -224,14 +224,7 @@ console.log("STEP 4: notification result =", result);
           <h2 style={{ fontSize: "24px", fontWeight: "700", color: "#111827" }}>
             All Articles
           </h2>
-              return (
-                <>
-                  <Navbar />
-                  <div style={{ textAlign: "center", marginTop: "80px" }}>
-                    <p>Loading profile...</p>
-                  </div>
-                </>
-              );
+          
 
           {articles.map((article) => (
             <div
